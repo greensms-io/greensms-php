@@ -36,6 +36,7 @@ class RestClient {
   }
 
   function request($options) {
+
     if(is_null($options)) {
       $options = [];
     }
@@ -74,6 +75,29 @@ class RestClient {
       }
       curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers_arr);
     }
+
+
+    $params_str = "";
+    $params = [];
+    if(!empty($this->defaultParams)) {
+      $params = $this->defaultParams;
+    }
+    if(array_key_exists('params', $options)) {
+      $params = array_merge($params, $options['params']);
+    }
+
+    $url = $options['url'];
+    $params_str = http_build_query($params);
+    if(strlen($params_str) > 0) {
+      $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $params_str;
+    }
+
+    echo "URL" . $url;
+
+
+    curl_setopt($this->ch, CURLOPT_URL, $url);
+    curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($this->ch, CURLOPT_HEADER, 1);
 
   }
 }
