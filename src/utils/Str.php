@@ -16,4 +16,18 @@ class Str {
     return false;
   }
 
+  static function camelizeKeys($array) {
+    $result = [];
+
+    array_walk_recursive($array, function ($value, &$key) use (&$result) {
+        $newKey = preg_replace_callback('/_([a-z])/', function ($matches) {
+            return strtoupper($matches[1]);
+        }, $key);
+
+        $result[$newKey] = $value;
+    });
+
+    return $result;
+  }
+
 }
