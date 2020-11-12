@@ -2,20 +2,23 @@
 
 namespace GreenSms\Api;
 
-class Schema {
+class Schema
+{
+    private static function getToSchema()
+    {
+        $toSchema = ['required',['lengthMin', 11], ['lengthMax', 14], ['regex', '^[0-9]+']];
+        return $toSchema;
+    }
 
-  private static function getToSchema() {
-    $toSchema = ['required',['lengthMin', 11], ['lengthMax', 14], ['regex', '^[0-9]+']];
-    return $toSchema;
-  }
+    private static function getIdSchema()
+    {
+        $toSchema = ['required',['lengthMin', 36], ['lengthMax', 36]];
+        return $toSchema;
+    }
 
-  private static function getIdSchema() {
-    $toSchema = ['required',['lengthMin', 36], ['lengthMax', 36]];
-    return $toSchema;
-  }
-
-  private static function getCommonSchema() {
-    $commonSchema = [
+    private static function getCommonSchema()
+    {
+        $commonSchema = [
       'v1' => [
         'send' => [
           'to' => self::getToSchema()
@@ -27,14 +30,14 @@ class Schema {
       ]
     ];
 
-    return $commonSchema;
-  }
+        return $commonSchema;
+    }
 
-  static function getSchema() {
+    public static function getSchema()
+    {
+        $commonSchema = self::getCommonSchema();
 
-    $commonSchema = self::getCommonSchema();
-
-    $schema = [
+        $schema = [
       'account' => [
         'v1' => [
           'token' => [
@@ -98,5 +101,5 @@ class Schema {
     ],
 
     ];
-  }
+    }
 }

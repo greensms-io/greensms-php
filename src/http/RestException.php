@@ -4,27 +4,28 @@ namespace GreenSms\Http;
 
 use \Exception;
 
-class RestException extends Exception {
+class RestException extends Exception
+{
+    protected $errorType = '';
+    protected $params = [];
 
+    public function __constructor($message, $code = 0, $previous = null)
+    {
+        $errorMessage = $message;
+        $this->name =  'RestException';
+        parent::__construct($errorMessage, $code, $previous);
+        $errorType = $this->getErrorType($this->code);
+        $this->errorType = $errorType;
+    }
 
-  protected $errorType = '';
-  protected $params = [];
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
 
-  public function __constructor($message, $code = 0, $previous = null) {
-
-    $errorMessage = $message;
-    $this->name =  'RestException';
-    parent::__construct($errorMessage, $code, $previous);
-    $errorType = $this->getErrorType($this->code);
-    $this->errorType = $errorType;
-  }
-
-  function setParams($params) {
-    $this->params = $params;
-  }
-
-  function getErrorType($code) {
-    switch ($code) {
+    public function getErrorType($code)
+    {
+        switch ($code) {
       case 0:
         return 'AUTH_DECLINED';
 
@@ -40,5 +41,5 @@ class RestException extends Exception {
       default:
         return 'INTERNAL_SERVER_ERROR';
     }
-  }
+    }
 }

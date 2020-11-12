@@ -4,12 +4,13 @@ namespace GreenSms\Api;
 
 use GreenSms\Api\Schema;
 
-class Modules {
+class Modules
+{
+    public static function getModules()
+    {
+        $schema = Schema::getSchema();
 
-  static function getModules() {
-    $schema = Schema::getSchema();
-
-    $modules = [
+        $modules = [
       'account' => [
         'schema' => $schema['account'],
         'versions' => [
@@ -159,6 +160,6 @@ class Modules {
         ],
     ];
 
-    return $modules;
-  }
+        return $modules;
+    }
 }
