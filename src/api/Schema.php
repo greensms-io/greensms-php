@@ -36,6 +36,7 @@ class Schema
     public static function getSchema()
     {
         $commonSchema = self::getCommonSchema();
+        $toSchema = self::getToSchema();
 
         $schema = [
           'account' => [
