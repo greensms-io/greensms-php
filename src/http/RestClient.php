@@ -3,8 +3,7 @@
 namespace GreenSms\Http;
 
 use GreenSms\Utils\Str;
-
-// TODO: Error handling
+use GreenSms\Http\RestException;
 
 class RestClient {
 
@@ -112,10 +111,15 @@ class RestClient {
     $response = json_decode($apiResult, TRUE);
 
     if (curl_errno($this->ch)) {
-      var_dump(curl_error($this->ch));
+      $error = curl_error($this->ch);
+      $response = new RestException($error->message, $error->code, $error->previous);
     }
 
     curl_close($this->ch);
+
+    if(array_key_exists('error', $response)) {
+      throw new RestException($response['error'], $response['code']);
+    }
 
     if($this->useCamelCase) {
       $response = Str::camelizeKeys($response);
