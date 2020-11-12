@@ -6,7 +6,7 @@ class Schema
 {
     private static function getToSchema()
     {
-        $toSchema = ['required',['lengthMin', 11], ['lengthMax', 14], ['regex', '^[0-9]+']];
+        $toSchema = ['required',['lengthMin', 11], ['lengthMax', 14], ['regex', '/^[0-9]+$/']];
         return $toSchema;
     }
 
@@ -59,7 +59,7 @@ class Schema
           'voice' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
-                'txt' => ['required', ['lengthMin', 1], ['lengthMax', 5], ['regex', '^[0-9]+']],
+                'txt' => ['required', ['lengthMin', 1], ['lengthMax', 5], ['regex', '/^[0-9]+$/']],
                 'lang' => [['subset', ['ru', 'en']]]
               ]
             ]
