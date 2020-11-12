@@ -9,4 +9,5 @@ $client = new GreenSms([
   'pass' => 'test'
 ]);
 
-// var_dump($client['account']);
+$response = $client->account->balance();
+echo "Balance : " . $response->balance. "\n";
