@@ -3,6 +3,8 @@
 namespace GreenSms;
 
 use GreenSms\Utils\Url;
+use GreenSms\Http\RestClient;
+use \Exception;
 
 class GreenSms {
 
@@ -67,7 +69,9 @@ class GreenSms {
       ])
     ];
 
-    echo(Url::buildUrl($sharedOptions['baseUrl'], ['account', 'balance']));
+    var_dump($sharedOptions['restClient']);
+
+    // echo(Url::buildUrl($sharedOptions['baseUrl'], ['account', 'balance']));
   }
 
   function addModules() {
@@ -75,6 +79,20 @@ class GreenSms {
   }
 
   function getHttpClient() {
+    $defaultParams = [];
 
+    if(!$this->token && $this->user) {
+      $defaultParams['user'] = $this->user;
+      $defaultParams['pass'] = $this->pass;
+    }
+
+    $httpParams = [
+      'defaultParams' => $defaultParams,
+      'defaultData' => [],
+      'token' => $this->token
+    ];
+
+    $restClient = new RestClient($httpParams);
+    return $restClient;
   }
 }
