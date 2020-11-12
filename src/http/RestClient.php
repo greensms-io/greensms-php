@@ -31,8 +31,6 @@ class RestClient {
       $this->useCamelCase = $options['useCamelCase'];
     }
 
-    $this->ch = curl_init();
-
   }
 
   function request($options) {
@@ -49,11 +47,16 @@ class RestClient {
       throw new Exception('URL is required!');
     }
 
+    $this->ch = curl_init();
+
     if(strtolower($options['method']) === 'post') {
       curl_setopt($this->ch, CURLOPT_POST, 1);
     }
 
-    $headers = [];
+    $headers = [
+      'Content-Type' => 'application/json'
+    ];
+
     if(array_key_exists('token', $options)) {
       $headers['Authorization'] = 'Bearer '. $options['token'];
     }
