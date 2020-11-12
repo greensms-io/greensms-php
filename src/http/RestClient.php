@@ -1,6 +1,8 @@
 <?php
 
-class HttpClient {
+namespace GreenSms\Http;
+
+class RestClient {
 
   protected $token;
   protected $defaultData;
@@ -46,8 +48,11 @@ class HttpClient {
       throw new Exception('URL is required!');
     }
 
-    $headers = [];
+    if(strtolower($options['method']) === 'post') {
+      curl_setopt($this->ch, CURLOPT_POST, 1);
+    }
 
+    $headers = [];
     if(array_key_exists('token', $options)) {
       $headers['Authorization'] = 'Bearer '. $options['token'];
     }
