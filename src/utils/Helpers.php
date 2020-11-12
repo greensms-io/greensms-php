@@ -2,7 +2,7 @@
 
 namespace GreenSms\Utils;
 
-class Str
+class Helpers
 {
     public static function isNullOrEmpty($str)
     {

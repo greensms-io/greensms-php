@@ -2,7 +2,7 @@
 
 namespace GreenSms\Http;
 
-use GreenSms\Utils\Str;
+use GreenSms\Utils\Helpers;
 use GreenSms\Http\RestException;
 
 class RestClient
@@ -122,7 +122,7 @@ class RestClient
         }
 
         if ($this->useCamelCase) {
-            $response = Str::camelizeKeys($response);
+            $response = Helpers::camelizeKeys($response);
         }
 
         return (object)$response;

@@ -3,7 +3,7 @@
 namespace GreenSms\Utils;
 
 use \Exception;
-use GreenSms\Utils\Str;
+use GreenSms\Utils\Helpers;
 
 const BASE_URL = 'https://api3.greensms.ru';
 
@@ -16,7 +16,7 @@ class Url
 
     public static function buildUrl($baseUrl, $parts)
     {
-        if (Str::isNullOrEmpty($baseUrl)) {
+        if (Helpers::isNullOrEmpty($baseUrl)) {
             throw new Exception('Base URL cannot be empty');
         }
 

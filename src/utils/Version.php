@@ -2,7 +2,7 @@
 
 namespace GreenSms\Utils;
 
-use GreenSms\Utils\Str;
+use GreenSms\Utils\Helpers;
 
 class Version
 {
@@ -12,7 +12,7 @@ class Version
 
     public static function getVersion($version)
     {
-        if (Str::isNullOrEmpty($version)) {
+        if (Helpers::isNullOrEmpty($version)) {
             return self::VERSIONS['v1'];
         }
         $version = strtolower($version);
