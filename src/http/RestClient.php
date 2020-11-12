@@ -54,6 +54,8 @@ class RestClient
 
         if (strtolower($options['method']) === 'post') {
             curl_setopt($this->ch, CURLOPT_POST, 1);
+        } else {
+            curl_setopt($this->ch, CURLOPT_POST, 0);
         }
 
         $headers = [
