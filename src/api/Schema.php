@@ -25,7 +25,7 @@ class Schema
             ],
             'status' => [
               'id' => self::getIdSchema(),
-              'extended' => ['boolean', 'required']
+              'extended' => ['boolean']
             ]
           ]
         ];
