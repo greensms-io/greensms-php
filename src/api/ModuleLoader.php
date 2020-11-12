@@ -4,6 +4,7 @@ namespace GreenSms\Api;
 
 use GreenSms\Api\Modules;
 use GreenSms\Utils\Url;
+use GreenSms\Utils\Helpers;
 
 class ModuleLoader {
 
@@ -72,5 +73,16 @@ class ModuleLoader {
     }
 
     return $this->moduleMap;
+  }
+
+  private function doesSchemaExists($moduleInfo, $version, $functionName) {
+    if(!array_key_exists('schema', $moduleInfo)) {
+      return false;
+    } else if(!array_key_exists($version, $moduleInfo['schema'])) {
+      return false;
+    } else if(!array_key_exists($functionName, $moduleInfo['schema'][$version])) {
+      return false;
+    }
+    return true;
   }
 }

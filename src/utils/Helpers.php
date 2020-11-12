@@ -31,4 +31,8 @@ class Helpers
 
         return $result;
     }
+
+    public static function keyExistsAndTrue($key, $arr) {
+      return array_key_exists($key, $arr) && $arr[$key];
+    }
 }
