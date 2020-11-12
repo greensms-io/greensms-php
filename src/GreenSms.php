@@ -55,7 +55,7 @@ class GreenSms {
       $pass = getenv('GREENSMS_PASS');
     }
 
-    if(is_null($this->token) && (is_null($this->user) || is_null($this->pass))) {
+    if(!$this->token && (is_null($this->user) || is_null($this->pass))) {
       throw new Exception('Either User/Pass or Auth Token is required!');
     }
 
