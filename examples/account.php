@@ -8,3 +8,5 @@ $client = new GreenSms([
   'user' => 'test',
   'pass' => 'test'
 ]);
+
+// var_dump($client['account']);

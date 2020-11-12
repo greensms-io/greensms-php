@@ -6,10 +6,11 @@ use GreenSms\Api\Modules;
 use GreenSms\Api\Module;
 use GreenSms\Utils\Url;
 use GreenSms\Utils\Helpers;
+use GreenSms\Api\MethodInvoker;
 
 class ModuleLoader {
 
-  protected $moduleMap = [];
+  protected $moduleMap = null;
 
   function registerModules($sharedOptions, $filters = null) {
 
@@ -17,13 +18,15 @@ class ModuleLoader {
       $filters = [];
     }
 
+    $this->moduleMap = new MethodInvoker;
+
     $currentVersion = $sharedOptions['version'];
     $modules = Modules::getModules();
 
     foreach ($modules as $moduleName => $moduleInfo) {
 
-      if(!array_key_exists($moduleName, $this->moduleMap)) {
-        $this->moduleMap[$moduleName] = [];
+      if(!property_exists($this->moduleMap, $moduleName)) {
+        $this->moduleMap->{$moduleName} = new MethodInvoker;
       }
 
       $moduleVersions = $moduleInfo['versions'];
@@ -38,14 +41,11 @@ class ModuleLoader {
 
 
       foreach ($moduleVersions as $version => $versionFunctions) {
-        if(!array_key_exists($version, $this->moduleMap[$moduleName])) {
-          $this->moduleMap[$moduleName][$version] = [];
+        if(!property_exists($this->moduleMap->{$moduleName}, $version)) {
+          $this->moduleMap->{$moduleName}->{$version} = new MethodInvoker;
         }
 
         foreach ($versionFunctions as $functionName => $functionDefinition) {
-          if(!array_key_exists($functionName, $this->moduleMap[$moduleName][$version])) {
-            $this->moduleMap[$moduleName][$version][$functionName] = [];
-          }
 
           $moduleSchema = null;
           $schemaExists = self::doesSchemaExists($moduleInfo, $version, $functionName);
@@ -68,16 +68,16 @@ class ModuleLoader {
             'moduleSchema' => $moduleSchema
           ];
 
-          $functionInstance = $this->getFunctionInstance($functionOptions);
-          $this->moduleMap[$moduleName][$version][$functionName] = $functionInstance;
+
+          $this->moduleMap->{$moduleName}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
 
           if($version === $currentVersion) {
-            $this->moduleMap[$moduleName][$functionName] = $this->moduleMap[$moduleName][$version][$functionName];
+            $this->moduleMap->{$moduleName}->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
           }
 
           if($isStaticModule) {
-            $this->moduleMap[$functionName] = $this->moduleMap[$moduleName][$version][$functionName];
-            unset($this->moduleMap[$moduleName]);
+            $this->moduleMap->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
+            unset($this->moduleMap->{$moduleName});
           }
         }
       }
