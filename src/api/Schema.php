@@ -56,23 +56,23 @@ class Schema
               ]
             ],
           ],
-          'voice' => [
+          'voice' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 5], ['regex', '^[0-9]+']],
                 'lang' => [['subset', ['ru', 'en']]]
               ]
             ]
-          ],
-          'pay' => [
+          ]),
+          'pay' => array_merge_recursive($commonSchema,[
             'v1' => [
               'send' => [
                 'amount' => [ 'required','integer', ['min', 1]],
                 'tag' => ['alphaNum']
               ],
             ]
-          ],
-          'sms' => [
+          ]),
+          'sms' => array_merge_recursive($commonSchema,[
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
@@ -80,8 +80,8 @@ class Schema
                 'tag' => ['alphaNum'],
               ]
             ]
-          ],
-          'viber' => [
+          ]),
+          'viber' => array_merge_recursive($commonSchema,[
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
@@ -89,8 +89,8 @@ class Schema
                 'cascase' => [['subset', ['sms', 'voice']]],
               ]
             ]
-          ],
-          'social' => [
+          ]),
+          'social' => array_merge_recursive($commonSchema,[
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
@@ -98,7 +98,9 @@ class Schema
                 'tag' => ['alphaNum'],
               ]
             ]
-          ],
+          ]),
         ];
+
+        return $schema;
     }
 }
