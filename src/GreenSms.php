@@ -13,7 +13,7 @@ class GreenSms {
   protected $pass;
   protected $version;
   protected $useTokenForRequests = true;
-  protected $useCamelCaseResponse = false;
+  protected $camelCaseResponse = false;
 
   function __construct($options = []) {
     if(is_null($options)) {
@@ -38,7 +38,7 @@ class GreenSms {
     }
 
     if(array_key_exists( 'camelCaseResponse', $options)) {
-      $this->useCamelCaseResponse = $options['camelCaseResponse'];
+      $this->camelCaseResponse = $options['camelCaseResponse'];
     }
 
     if(array_key_exists( 'version', $options)) {
@@ -65,20 +65,22 @@ class GreenSms {
       'useTokenForRequests' => $this->useTokenForRequests,
       'baseUrl' => Url::baseUrl(),
       'restClient' => $this->getHttpClient([
-        'useCamelCase' => $this->useCamelCaseResponse
-      ])
+        'useCamelCase' => $this->camelCaseResponse
+      ]),
+      'version' => ''
     ];
 
-    var_dump($sharedOptions['restClient']);
-
-    // echo(Url::buildUrl($sharedOptions['baseUrl'], ['account', 'balance']));
+    var_dump($sharedOptions['restClient']->request([
+      'url' => Url::buildUrl($sharedOptions['baseUrl'], ['account', 'token']),
+      'method' => 'POST',
+    ]));
   }
 
   function addModules() {
 
   }
 
-  function getHttpClient() {
+  function getHttpClient($args) {
     $defaultParams = [];
 
     if(!$this->token && $this->user) {
@@ -91,6 +93,8 @@ class GreenSms {
       'defaultData' => [],
       'token' => $this->token
     ];
+
+    $httpParams = array_merge($httpParams, $args);
 
     $restClient = new RestClient($httpParams);
     return $restClient;
