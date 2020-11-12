@@ -121,7 +121,7 @@ class RestClient {
       $response = Str::camelizeKeys($response);
     }
 
-    return $response;
+    return (object)$response;
 
   }
 }
