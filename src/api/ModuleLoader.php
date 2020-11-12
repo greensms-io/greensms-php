@@ -25,11 +25,15 @@ class ModuleLoader {
       }
 
       $moduleVersions = $moduleInfo['versions'];
-      $isStaticModule = ($filters['loadStatic']  && $moduleInfo['static']);
+      $processStaticOnly = Helpers::keyExistsAndTrue('loadStatic', $filters) && Helpers::keyExistsAndTrue('static', $moduleInfo);
 
-      if($isStaticModule) {
+      if($processStaticOnly) {
         continue;
       }
+
+      $isStaticModule = Helpers::keyExistsAndTrue('static', $moduleInfo);
+
+
 
       foreach ($moduleVersions as $version => $versionFunctions) {
         if(!array_key_exists($version, $this->moduleMap[$moduleName])) {
@@ -42,26 +46,24 @@ class ModuleLoader {
           }
 
           $moduleSchema = null;
-          $schemaExists = $moduleInfo['schema']
-                            && $moduleInfo['schema'][$version]
-                            && $moduleInfo['schema'][$version][$functionName];
+          $schemaExists = self::doesSchemaExists($moduleInfo, $version, $functionName);
           if($schemaExists) {
             $moduleSchema = $moduleInfo['schema'][$version][$functionName];
           }
 
           $urlParts = [];
-          if(!$moduleInfo['static']) {
-            $urlParts.push($moduleName);
+          if($isStaticModule) {
+            array_push($urlParts, $moduleName);
           }
 
-          $urlParts.push($functionName);
+          array_push($urlParts, $functionName);
           $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
 
           if($version === $currentVersion) {
             $this->moduleMap[$moduleName][$functionName] = $this->moduleMap[$moduleName][$version][$functionName];
           }
 
-          if($moduleInfo['static']) {
+          if($isStaticModule) {
             $this->moduleMap[$functionName] = $this->moduleMap[$moduleName][$version][$functionName];
             unset($this->moduleMap[$moduleName]);
           }
