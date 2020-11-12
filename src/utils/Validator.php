@@ -9,11 +9,8 @@ class Validator
 {
     public static function validate($schema, $data)
     {
-        // var_dump($schema);
-        // var_dump($data);
-
         $validator = new ValitronValidator($data);
-        $validator->rules($schema);
+        $validator->mapFieldsRules($schema);
 
         if ($validator->validate()) {
             return null;
