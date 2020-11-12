@@ -17,8 +17,8 @@ class Module {
     $this->params = $options;
   }
 
-  function apiFunction($data) {
-    if(!$moduleSchema) {
+  public function apiFunction($data = []) {
+    if($this->moduleSchema) {
       $validationResult = Validator::validate($this->moduleSchema, $data);
     }
 
