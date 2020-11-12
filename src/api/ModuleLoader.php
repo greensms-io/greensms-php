@@ -3,6 +3,7 @@
 namespace GreenSms\Api;
 
 use GreenSms\Api\Modules;
+use GreenSms\Api\Module;
 use GreenSms\Utils\Url;
 use GreenSms\Utils\Helpers;
 
@@ -53,12 +54,22 @@ class ModuleLoader {
           }
 
           $urlParts = [];
-          if($isStaticModule) {
+          if(!$isStaticModule) {
             array_push($urlParts, $moduleName);
           }
 
           array_push($urlParts, $functionName);
           $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
+
+          $functionOptions = [
+            'url' => $apiUrl,
+            'definition' => $functionDefinition,
+            'sharedOptions' => $sharedOptions,
+            'moduleSchema' => $moduleSchema
+          ];
+
+          $functionInstance = $this->getFunctionInstance($functionOptions);
+          $this->moduleMap[$moduleName][$version][$functionName] = $functionInstance;
 
           if($version === $currentVersion) {
             $this->moduleMap[$moduleName][$functionName] = $this->moduleMap[$moduleName][$version][$functionName];
@@ -84,5 +95,20 @@ class ModuleLoader {
       return false;
     }
     return true;
+  }
+
+  private function getFunctionInstance($options) {
+
+    $restClient = $options['sharedOptions']['restClient'];
+    $moduleSchema = $options['moduleSchema'];
+
+    $requestArgs = [
+      'url' => $options['url'],
+      'method' => $options['definition']['method']
+    ];
+
+    $module = new Module($restClient, $moduleSchema, $requestArgs);
+    $functionInstance = array($module, 'apiFunction');
+    return $functionInstance;
   }
 }
