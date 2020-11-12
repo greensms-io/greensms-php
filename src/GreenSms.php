@@ -93,10 +93,10 @@ class GreenSms
         }
 
         $httpParams = [
-      'defaultParams' => $defaultParams,
-      'defaultData' => [],
-      'token' => $this->token
-    ];
+          'defaultParams' => $defaultParams,
+          'defaultData' => [],
+          'token' => $this->token
+        ];
 
         $httpParams = array_merge($httpParams, $args);
 
