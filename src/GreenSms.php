@@ -3,6 +3,7 @@
 namespace GreenSms;
 
 use GreenSms\Utils\Url;
+use GreenSms\Utils\Version;
 use GreenSms\Http\RestClient;
 use \Exception;
 
@@ -67,7 +68,7 @@ class GreenSms {
       'restClient' => $this->getHttpClient([
         'useCamelCase' => $this->camelCaseResponse
       ]),
-      'version' => ''
+      'version' => Version::getVersion($this->version)
     ];
 
     var_dump($sharedOptions['restClient']->request([
