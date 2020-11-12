@@ -5,6 +5,7 @@ namespace GreenSms;
 use GreenSms\Utils\Url;
 use GreenSms\Utils\Version;
 use GreenSms\Http\RestClient;
+use GreenSms\Api\ModuleLoader;
 use \Exception;
 
 class GreenSms
@@ -64,22 +65,22 @@ class GreenSms
         }
 
         $sharedOptions = [
-      'useTokenForRequests' => $this->useTokenForRequests,
-      'baseUrl' => Url::baseUrl(),
-      'restClient' => $this->getHttpClient([
-        'useCamelCase' => $this->camelCaseResponse
-      ]),
-      'version' => Version::getVersion($this->version)
-    ];
+          'useTokenForRequests' => $this->useTokenForRequests,
+          'baseUrl' => Url::baseUrl(),
+          'restClient' => $this->getHttpClient([
+            'useCamelCase' => $this->camelCaseResponse
+          ]),
+          'version' => Version::getVersion($this->version)
+        ];
 
-        var_dump($sharedOptions['restClient']->request([
-      'url' => Url::buildUrl($sharedOptions['baseUrl'], ['account', 'token']),
-      'method' => 'POST',
-    ]));
+        $this->addModules($sharedOptions);
     }
 
-    public function addModules()
+    public function addModules($sharedOptions)
     {
+      $moduleLoader = new ModuleLoader();
+      $modules = $moduleLoader->registerModules($sharedOptions);
+      print_r($modules);
     }
 
     public function getHttpClient($args)
