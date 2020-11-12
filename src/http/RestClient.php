@@ -2,6 +2,10 @@
 
 namespace GreenSms\Http;
 
+use GreenSms\Utils\Str;
+
+// TODO: Error handling
+
 class RestClient {
 
   protected $token;
@@ -76,6 +80,7 @@ class RestClient {
               $headers_arr[] = "$k: $v";
           }
       }
+
       curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers_arr);
     }
 
@@ -91,16 +96,32 @@ class RestClient {
 
     $url = $options['url'];
     $params_str = http_build_query($params);
+
     if(strlen($params_str) > 0) {
       $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $params_str;
     }
 
-    echo "URL" . $url;
-
-
     curl_setopt($this->ch, CURLOPT_URL, $url);
-    curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($this->ch, CURLOPT_HEADER, 1);
+    curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($this->ch, CURLOPT_HEADER, 0);
+    curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+    $apiResult = curl_exec($this->ch);
+    $response = json_decode($apiResult, TRUE);
+
+    if (curl_errno($this->ch)) {
+      var_dump(curl_error($this->ch));
+    }
+
+    curl_close($this->ch);
+
+    if($this->useCamelCase) {
+      $response = Str::camelizeKeys($response);
+    }
+
+    return $response;
 
   }
 }
