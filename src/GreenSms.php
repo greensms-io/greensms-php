@@ -80,7 +80,9 @@ class GreenSms
     {
       $moduleLoader = new ModuleLoader();
       $modules = $moduleLoader->registerModules($sharedOptions);
-      print_r($modules);
+      foreach($modules as $moduleName => $moduleTree) {
+        $this->{$moduleName} = $moduleTree;
+      }
     }
 
     public function getHttpClient($args)
