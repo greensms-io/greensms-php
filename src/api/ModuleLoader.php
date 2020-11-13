@@ -60,11 +60,11 @@ class ModuleLoader
                     $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
 
                     $functionOptions = [
-            'url' => $apiUrl,
-            'definition' => $functionDefinition,
-            'sharedOptions' => $sharedOptions,
-            'moduleSchema' => $moduleSchema
-          ];
+                      'url' => $apiUrl,
+                      'definition' => $functionDefinition,
+                      'sharedOptions' => $sharedOptions,
+                      'moduleSchema' => $moduleSchema
+                    ];
 
 
                     $this->moduleMap->{$moduleName}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
@@ -102,9 +102,9 @@ class ModuleLoader
         $moduleSchema = $options['moduleSchema'];
 
         $requestArgs = [
-      'url' => $options['url'],
-      'method' => $options['definition']['method']
-    ];
+          'url' => $options['url'],
+          'method' => $options['definition']['method']
+        ];
 
         $module = new Module($restClient, $moduleSchema, $requestArgs);
         $functionInstance = array($module, 'apiFunction');
