@@ -53,12 +53,13 @@ class GreenSms extends MethodInvoker
             $this->token = getenv('GREENSMS_TOKEN');
         }
 
+
         if (!$this->token && !$this->user) {
-            $user = getenv('GREENSMS_USER');
+            $this->user = getenv('GREENSMS_USER');
         }
 
         if (!$this->token && !$this->pass) {
-            $pass = getenv('GREENSMS_PASS');
+            $this->pass = getenv('GREENSMS_PASS');
         }
 
         if (!$this->token && (!$this->user || !$this->pass)) {
