@@ -8,4 +8,3 @@ $response = $client->whois->lookup([
 echo "Lookup Response";
 print_r($response);
 echo "\n\n";
-
