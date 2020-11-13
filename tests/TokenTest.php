@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use GreenSms\Tests\Utility;
 use GreenSms\GreenSms;
 
-final class GeneralTest extends TestCase {
+final class TokenTest extends TestCase {
 
   private $utility = null;
 
