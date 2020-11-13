@@ -7,8 +7,9 @@ use GreenSms\Utils\Version;
 use GreenSms\Http\RestClient;
 use GreenSms\Api\ModuleLoader;
 use \Exception;
+use GreenSms\Api\MethodInvoker;
 
-class GreenSms
+class GreenSms extends MethodInvoker
 {
     protected $token;
     protected $user;
