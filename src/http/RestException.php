@@ -23,6 +23,11 @@ class RestException extends Exception
         $this->params = $params;
     }
 
+    public function getParams()
+    {
+        return $this->params;
+    }
+
     public function __toString() {
       $params = json_encode($this->params);
       return __CLASS__ . ": [{$this->code}]: {$this->message}\n{$this->getTraceAsString()}\n\n{$params}";
