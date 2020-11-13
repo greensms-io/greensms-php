@@ -59,11 +59,12 @@ class RestClient
         }
 
         $headers = [
-      'Content-Type' => 'application/json'
-    ];
+            'Content-Type' => 'application/json'
+        ];
 
-        if (array_key_exists('token', $options)) {
-            $headers['Authorization'] = 'Bearer '. $options['token'];
+
+        if ($this->token) {
+            $headers['Authorization'] = 'Bearer '. $this->token;
         }
 
         if (array_key_exists('headers', $options)) {
@@ -72,7 +73,7 @@ class RestClient
 
         if (!empty($headers)) {
             $headers_arr = [];
-            foreach ($headers_arr as $k => $v) {
+            foreach ($headers as $k => $v) {
                 if (is_array($v)) {
                     foreach ($v as $val) {
                         $headers_arr[] = "$k: $val";
@@ -81,7 +82,6 @@ class RestClient
                     $headers_arr[] = "$k: $v";
                 }
             }
-
             curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers_arr);
         }
 
