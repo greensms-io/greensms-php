@@ -36,6 +36,7 @@ final class GeneralTest extends TestCase {
 
       try {
         $invalidTokenClient->account->balance();
+        $this->fail("Shouldn't allow operations on Expired Auth Token");
       } catch(Exception $e)  {
         $this->assertEquals('Authorization declined', $e->getMessage());
       }
