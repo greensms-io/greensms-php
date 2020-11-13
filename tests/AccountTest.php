@@ -36,6 +36,36 @@ final class AccountTest extends TestCase {
     } catch(Exception $e) {
       $this->assertObjectHasAttribute('message', $e);
     }
-
   }
+
+  public function testRaisesExceptionOnInvalidCredentials() {
+    try {
+      $client = new GreenSms([
+        'user' => 'randomusername',
+        'pass' => 'pass'
+      ]);
+      $client->account->balance();
+      $this->fail("Shouldn't allow operations on Invalid Credentials");
+    } catch(Exception $e) {
+      $this->assertObjectHasAttribute('message', $e);
+      $this->assertEquals('Authorization declined', $e->getMessage());
+    }
+  }
+
+  public function testRaisesExceptionOnInsufficientFunds() {
+    try {
+      $client = new GreenSms([
+        'user' => 'test_block_user',
+        'pass' => '183456'
+      ]);
+      $client->sms->send([
+        'to' => $this->utility->getRandomPhone()
+      ]);
+      $this->fail("Shouldn't allow send operations when Insufficient Funds");
+    } catch(Exception $e) {
+      $this->assertObjectHasAttribute('message', $e);
+      $this->assertEquals('Insufficient funds', $e->getMessage());
+    }
+  }
+
 }
