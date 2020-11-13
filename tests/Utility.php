@@ -13,4 +13,13 @@ class Utility {
 
     return $client;
   }
+
+  public function getRandomPhone($min = 70000000111, $max = 70009999999) {
+    $phoneNum = $this->getRandomNumber($min, $max);
+    return $phoneNum;
+  }
+
+  public function getRandomNumber($min, $max) {
+    return strval(rand($min, $max));
+  }
 }
