@@ -4,8 +4,9 @@ namespace GreenSms\Api;
 
 use \stdClass;
 
-class MethodInvoker extends stdClass {
-  public function __call($method, $args)
+class MethodInvoker extends stdClass
+{
+    public function __call($method, $args)
     {
         if (isset($this->$method)) {
             $func = $this->$method;

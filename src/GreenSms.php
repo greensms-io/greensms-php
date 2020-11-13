@@ -78,11 +78,11 @@ class GreenSms
 
     public function addModules($sharedOptions)
     {
-      $moduleLoader = new ModuleLoader();
-      $modules = $moduleLoader->registerModules($sharedOptions);
-      foreach($modules as $moduleName => $moduleTree) {
-        $this->{$moduleName} = $moduleTree;
-      }
+        $moduleLoader = new ModuleLoader();
+        $modules = $moduleLoader->registerModules($sharedOptions);
+        foreach ($modules as $moduleName => $moduleTree) {
+            $this->{$moduleName} = $moduleTree;
+        }
     }
 
     public function getHttpClient($args)

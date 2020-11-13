@@ -64,7 +64,7 @@ class Schema
               ]
             ]
           ]),
-          'pay' => array_merge_recursive($commonSchema,[
+          'pay' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'amount' => [ 'required','integer', ['min', 1]],
@@ -72,7 +72,7 @@ class Schema
               ],
             ]
           ]),
-          'sms' => array_merge_recursive($commonSchema,[
+          'sms' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
@@ -81,7 +81,7 @@ class Schema
               ]
             ]
           ]),
-          'viber' => array_merge_recursive($commonSchema,[
+          'viber' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
@@ -90,7 +90,7 @@ class Schema
               ]
             ]
           ]),
-          'social' => array_merge_recursive($commonSchema,[
+          'social' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
