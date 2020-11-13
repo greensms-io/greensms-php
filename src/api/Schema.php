@@ -94,7 +94,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['alphaNum'],
+                'from' => ['required', 'alphaNum'],
                 'tag' => ['alphaNum'],
               ]
             ]
