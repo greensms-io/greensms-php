@@ -7,9 +7,9 @@ use GreenSms\GreenSms;
 putenv('GREENSMS_USER=test');
 putenv('GREENSMS_PASS=test');
 
-$tokenClient = new GreenSms();
+$envClient = new GreenSms();
 
-$response = $tokenClient->account->balance();
+$response = $envClient->account->balance();
 echo "Balance : " . $response->balance. "\n";
 
 // Unsetting the env variable after use
