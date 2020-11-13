@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 
 use GreenSms\Tests\Utility;
-use \Exception;
 use GreenSms\GreenSms;
 
 final class AccountTest extends TestCase {
