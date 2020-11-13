@@ -59,7 +59,8 @@ final class AccountTest extends TestCase {
         'pass' => '183456'
       ]);
       $client->sms->send([
-        'to' => $this->utility->getRandomPhone()
+        'to' => $this->utility->getRandomPhone(),
+        'txt' => 'Test134'
       ]);
       $this->fail("Shouldn't allow send operations when Insufficient Funds");
     } catch(Exception $e) {
