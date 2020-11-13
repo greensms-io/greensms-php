@@ -49,19 +49,19 @@ class GreenSms extends MethodInvoker
             $this->version = $options['version'];
         }
 
-        if (is_null($this->token)) {
+        if (!$this->token) {
             $this->token = getenv('GREENSMS_TOKEN');
         }
 
-        if (is_null($this->token) && is_null($this->user)) {
+        if (!$this->token && !$this->user) {
             $user = getenv('GREENSMS_USER');
         }
 
-        if (is_null($this->token) && is_null($this->pass)) {
+        if (!$this->token && !$this->pass) {
             $pass = getenv('GREENSMS_PASS');
         }
 
-        if (!$this->token && (is_null($this->user) || is_null($this->pass))) {
+        if (!$this->token && (!$this->user || !$this->pass)) {
             throw new Exception('Either User/Pass or Auth Token is required!');
         }
 
