@@ -20,4 +20,10 @@ final class GeneralTest extends TestCase
         $this->assertObjectHasAttribute('def', $response);
         $this->assertObjectHasAttribute('region', $response);
     }
+
+    public function testCanFetchStatus()
+    {
+        $response = $this->utility->getInstance()->status();
+        $this->assertObjectHasAttribute('status', $response);
+    }
 }
