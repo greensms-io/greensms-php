@@ -24,11 +24,17 @@ final class CallTest extends TestCase
         $response = $this->utility->getInstance()->call->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
         $this->assertObjectHasAttribute('code', $response);
+        $requestId = $response->request_id;
+        return $requestId;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     * */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->call->status(['id' => '1fd4ac4d-6e4f-4e32-b6e4-8087d3466f55', 'extended' => true ]);
+        sleep(2);
+        $response = $this->utility->getInstance()->call->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 

@@ -25,11 +25,16 @@ final class VoiceTest extends TestCase
 
         $response = $this->utility->getInstance()->voice->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
+        return $response->request_id;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->voice->status(['id' => '41f23094-deda-4cab-ac9c-3ab4f2fee9e6']);
+        sleep(2);
+        $response = $this->utility->getInstance()->voice->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 

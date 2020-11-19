@@ -26,11 +26,16 @@ final class ViberTest extends TestCase
 
         $response = $this->utility->getInstance()->viber->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
+        return $response->request_id;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->viber->status(['id' => '0b18fab4-0c5d-4a8b-8ee4-057a59596c7d']);
+        sleep(2);
+        $response = $this->utility->getInstance()->viber->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 

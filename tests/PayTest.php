@@ -25,11 +25,16 @@ final class PayTest extends TestCase
 
         $response = $this->utility->getInstance()->pay->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
+        return $response->request_id;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->pay->status(['id' => '60f231d9-16ec-4313-842e-6e6853063482']);
+        sleep(2);
+        $response = $this->utility->getInstance()->pay->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 

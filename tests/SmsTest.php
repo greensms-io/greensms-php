@@ -27,11 +27,16 @@ final class SmsTest extends TestCase
 
         $response = $this->utility->getInstance()->sms->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
+        return $response->request_id;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->sms->status(['id' => 'dc2bac6d-f375-4e19-9a02-ef0148991635']);
+        sleep(2);
+        $response = $this->utility->getInstance()->sms->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 

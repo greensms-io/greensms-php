@@ -27,11 +27,16 @@ final class SocialTest extends TestCase
 
         $response = $this->utility->getInstance()->social->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
+        return $response->request_id;
     }
 
-    public function testCanFetchStatus()
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanFetchStatus($requestId)
     {
-        $response = $this->utility->getInstance()->social->status(['id' => 'caf3efb1-8aca-4387-9ed0-e667d315c5c9']);
+        sleep(2);
+        $response = $this->utility->getInstance()->social->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 
