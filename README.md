@@ -24,6 +24,11 @@ $client = new GreenSms([
   'pass' => 'test'
 ]);
 
+$response = $client->sms->send([
+  'to' => '79260000121',
+  'txt' => 'Here is your message for delivery'
+]);
+
 
 echo "Sms Request Id: " . $response->request_id;
 
