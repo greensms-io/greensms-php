@@ -34,5 +34,8 @@
     "psr-4": {
       "GreenSMS\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit tests"
   }
 }
