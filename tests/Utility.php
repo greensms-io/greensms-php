@@ -1,14 +1,14 @@
 <?php
 
-namespace GreenSms\Tests;
+namespace GreenSMS\Tests;
 
-use GreenSms\GreenSms;
+use GreenSMS\GreenSMS;
 
 class Utility
 {
     public function getInstance()
     {
-        $client = new GreenSms([
+        $client = new GreenSMS([
           'user' => 'test',
           'pass' => 'test'
         ]);
@@ -36,7 +36,7 @@ class Utility
     {
         putenv('GREENSMS_USER=test');
         putenv('GREENSMS_PASS=test');
-        $envClient = new GreenSms();
+        $envClient = new GreenSMS();
 
         // Unsetting the env variable after use
         putenv('GREENSMS_USER');

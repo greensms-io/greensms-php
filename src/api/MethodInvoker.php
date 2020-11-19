@@ -1,6 +1,6 @@
 <?php
 
-namespace GreenSms\Api;
+namespace GreenSMS\Api;
 
 use \stdClass;
 

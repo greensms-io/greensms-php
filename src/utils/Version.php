@@ -1,8 +1,8 @@
 <?php
 
-namespace GreenSms\Utils;
+namespace GreenSMS\Utils;
 
-use GreenSms\Utils\Helpers;
+use GreenSMS\Utils\Helpers;
 
 class Version
 {

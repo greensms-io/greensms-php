@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-use GreenSms\Tests\Utility;
-use GreenSms\GreenSms;
+use GreenSMS\Tests\Utility;
+use GreenSMS\GreenSMS;
 
 final class AccountTest extends TestCase
 {
@@ -36,7 +36,7 @@ final class AccountTest extends TestCase
     public function testRaisesExceptionOnNoCredentials()
     {
         try {
-            $client = new GreenSms();
+            $client = new GreenSMS();
             $this->fail("Shouldn't create client without Credentials");
         } catch (Exception $e) {
             $this->assertObjectHasAttribute('message', $e);
@@ -46,7 +46,7 @@ final class AccountTest extends TestCase
     public function testRaisesExceptionOnInvalidCredentials()
     {
         try {
-            $client = new GreenSms([
+            $client = new GreenSMS([
               'user' => 'randomusername',
               'pass' => 'pass'
             ]);
@@ -61,7 +61,7 @@ final class AccountTest extends TestCase
     public function testRaisesExceptionOnInsufficientFunds()
     {
         try {
-            $client = new GreenSms([
+            $client = new GreenSMS([
               'user' => 'test_block_user',
               'pass' => '183456'
             ]);

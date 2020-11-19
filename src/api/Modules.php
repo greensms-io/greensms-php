@@ -1,8 +1,8 @@
 <?php
 
-namespace GreenSms\Api;
+namespace GreenSMS\Api;
 
-use GreenSms\Api\Schema;
+use GreenSMS\Api\Schema;
 
 class Modules
 {

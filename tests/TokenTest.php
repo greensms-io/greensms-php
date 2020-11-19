@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-use GreenSms\Tests\Utility;
-use GreenSms\GreenSms;
+use GreenSMS\Tests\Utility;
+use GreenSMS\GreenSMS;
 
 final class TokenTest extends TestCase
 {
@@ -18,7 +18,7 @@ final class TokenTest extends TestCase
     {
         $token = $this->utility->getTestToken();
 
-        $client = new GreenSms([
+        $client = new GreenSMS([
           'token' => $token
         ]);
         $response = $client->account->balance();
@@ -31,7 +31,7 @@ final class TokenTest extends TestCase
           'expire' => 5
         ]);
 
-        $invalidTokenClient = new GreenSms([
+        $invalidTokenClient = new GreenSMS([
           'token' => $tokenResponse->access_token
         ]);
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace GreenSms\Http;
+namespace GreenSMS\Http;
 
-use GreenSms\Utils\Helpers;
-use GreenSms\Http\RestException;
+use GreenSMS\Utils\Helpers;
+use GreenSMS\Http\RestException;
 
 class RestClient
 {

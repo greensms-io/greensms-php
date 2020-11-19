@@ -1,6 +1,6 @@
 <?php
 
-namespace GreenSms\Utils;
+namespace GreenSMS\Utils;
 
 class Helpers
 {

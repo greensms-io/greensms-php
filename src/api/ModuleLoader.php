@@ -1,12 +1,12 @@
 <?php
 
-namespace GreenSms\Api;
+namespace GreenSMS\Api;
 
-use GreenSms\Api\Modules;
-use GreenSms\Api\Module;
-use GreenSms\Utils\Url;
-use GreenSms\Utils\Helpers;
-use GreenSms\Api\MethodInvoker;
+use GreenSMS\Api\Modules;
+use GreenSMS\Api\Module;
+use GreenSMS\Utils\Url;
+use GreenSMS\Utils\Helpers;
+use GreenSMS\Api\MethodInvoker;
 
 class ModuleLoader
 {

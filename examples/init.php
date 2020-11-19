@@ -2,9 +2,9 @@
 
 require_once("./vendor/autoload.php");
 
-use GreenSms\GreenSms;
+use GreenSMS\GreenSMS;
 
-$client = new GreenSms([
+$client = new GreenSMS([
   'user' => 'test',
   'pass' => 'test'
 ]);

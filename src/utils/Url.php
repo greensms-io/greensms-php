@@ -1,9 +1,9 @@
 <?php
 
-namespace GreenSms\Utils;
+namespace GreenSMS\Utils;
 
 use \Exception;
-use GreenSms\Utils\Helpers;
+use GreenSMS\Utils\Helpers;
 
 const BASE_URL = 'https://api3.greensms.ru';
 
@@ -21,7 +21,7 @@ class Url
         }
 
         array_unshift($parts, $baseUrl);
-        array_walk_recursive($parts, 'GreenSms\Utils\Url::stripTrailingSlash');
+        array_walk_recursive($parts, 'GreenSMS\Utils\Url::stripTrailingSlash');
         $url = implode('/', $parts);
 
         return $url;

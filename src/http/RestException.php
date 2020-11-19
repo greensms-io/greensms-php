@@ -1,6 +1,6 @@
 <?php
 
-namespace GreenSms\Http;
+namespace GreenSMS\Http;
 
 use \Exception;
 

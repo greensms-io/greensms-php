@@ -2,12 +2,12 @@
 
 require_once("./vendor/autoload.php");
 
-use GreenSms\GreenSms;
+use GreenSMS\GreenSMS;
 
 putenv('GREENSMS_USER=test');
 putenv('GREENSMS_PASS=test');
 
-$envClient = new GreenSms();
+$envClient = new GreenSMS();
 
 $response = $envClient->account->balance();
 echo "Balance : " . $response->balance. "\n";

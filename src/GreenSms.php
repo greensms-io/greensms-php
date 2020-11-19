@@ -1,15 +1,15 @@
 <?php
 
-namespace GreenSms;
+namespace GreenSMS;
 
-use GreenSms\Utils\Url;
-use GreenSms\Utils\Version;
-use GreenSms\Http\RestClient;
-use GreenSms\Api\ModuleLoader;
+use GreenSMS\Utils\Url;
+use GreenSMS\Utils\Version;
+use GreenSMS\Http\RestClient;
+use GreenSMS\Api\ModuleLoader;
 use \Exception;
-use GreenSms\Api\MethodInvoker;
+use GreenSMS\Api\MethodInvoker;
 
-class GreenSms extends MethodInvoker
+class GreenSMS extends MethodInvoker
 {
     protected $token;
     protected $user;

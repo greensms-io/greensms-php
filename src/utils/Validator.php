@@ -1,9 +1,9 @@
 <?php
 
-namespace GreenSms\Utils;
+namespace GreenSMS\Utils;
 
 use Valitron\Validator as ValitronValidator;
-use GreenSms\Http\RestException;
+use GreenSMS\Http\RestException;
 
 class Validator
 {

@@ -2,14 +2,20 @@
   "name": "greensms/greensms",
   "description": "GREENSMS API: SMS, Viber, Voce, Call, HLR, Pay",
   "type": "library",
-  "keywords": ["greensms", "sms", "api", "rest", "viber"],
+  "keywords": [
+    "greensms",
+    "sms",
+    "api",
+    "rest",
+    "viber"
+  ],
   "homepage": "https://github.com/greensms-ru/greensms-php",
   "license": "MIT",
   "authors": [
-      {
-          "name": "Team GreenSMS",
-          "email": "upport@greensms.ru"
-      }
+    {
+      "name": "Team GreenSMS",
+      "email": "support@greensms.ru"
+    }
   ],
   "require": {
     "php": ">=5.3.2",
@@ -20,11 +26,13 @@
     "friendsofphp/php-cs-fixer": "^2.16"
   },
   "autoload": {
-    "psr-4": { "GreenSms\\": "src/" }
+    "psr-4": {
+      "GreenSMS\\": "src/"
+    }
   },
   "autoload-dev": {
     "psr-4": {
-        "GreenSms\\Tests\\": "tests/"
+      "GreenSMS\\Tests\\": "tests/"
     }
   }
 }

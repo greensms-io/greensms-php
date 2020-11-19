@@ -16,10 +16,10 @@ Check out these [code examples](examples) to get up and running quickly.
 
 ```php
 
-use GreenSms\GreenSms;
+use GreenSMS\GreenSMS;
 
 # Register at my.greeensms.ru first
-$client = new GreenSms([
+$client = new GreenSMS([
   'user' => 'test',
   'pass' => 'test'
 ]);
@@ -42,9 +42,9 @@ echo "Sms Request Id: " . $response->request_id;
 
 ```php
 
-use GreenSms\GreenSms;
+use GreenSMS\GreenSMS;
 
-$tokenClient = new GreenSms([
+$tokenClient = new GreenSMS([
   'token' => 'yourtoken'
 ]);
 

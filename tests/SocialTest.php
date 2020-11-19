@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-use GreenSms\Tests\Utility;
-use GreenSms\GreenSms;
+use GreenSMS\Tests\Utility;
+use GreenSMS\GreenSMS;
 
 final class SocialTest extends TestCase
 {

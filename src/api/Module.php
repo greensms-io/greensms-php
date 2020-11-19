@@ -1,8 +1,8 @@
 <?php
 
-namespace GreenSms\Api;
+namespace GreenSMS\Api;
 
-use GreenSms\Utils\Validator;
+use GreenSMS\Utils\Validator;
 
 class Module
 {
