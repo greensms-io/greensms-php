@@ -16,10 +16,10 @@ final class TokenTest extends TestCase
 
     public function testCanFetchLookup()
     {
-        $token = $this->utility->getTestToken();
+        $tokenResponse = $this->utility->getInstance()->account->token(['expire' => 10]);
 
         $client = new GreenSMS([
-          'token' => $token
+          'token' => $tokenResponse->access_token
         ]);
         $response = $client->account->balance();
         $this->assertObjectHasAttribute('balance', $response);

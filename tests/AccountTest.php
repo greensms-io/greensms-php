@@ -22,7 +22,7 @@ final class AccountTest extends TestCase
 
     public function testCanFetchToken()
     {
-        $response = $this->utility->getInstance()->account->token();
+        $response = $this->utility->getInstance()->account->token(['expire' => 10]);
         $this->assertObjectHasAttribute('access_token', $response);
     }
 
