@@ -1,4 +1,5 @@
 <?php
+namespace GreenSMS\Tests;
 
 namespace GreenSMS\Tests;
 
