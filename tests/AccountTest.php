@@ -1,4 +1,5 @@
 <?php
+namespace GreenSMS\Tests;
 
 use PHPUnit\Framework\TestCase;
 
