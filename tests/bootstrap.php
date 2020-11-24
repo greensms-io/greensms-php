@@ -1,4 +1,2 @@
 <?php
-
-$loader = @include __DIR__ . '/../vendor/autoload.php';
-$loader->add('GreenSMS', __DIR__);
+require __DIR__.'/../vendor/autoload.php';
