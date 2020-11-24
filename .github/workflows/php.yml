@@ -9,20 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [7.3, 7.4]
-        stability: [prefer-lowest, prefer-stable]
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          php-version: 7.4
+          extensions: dom, curl, libxml, mbstring, zip, pcntl
           tools: composer:v2
           coverage: none
 
