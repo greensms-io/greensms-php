@@ -1,5 +1,10 @@
 # greensms-php
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/greensms-ru/greensms-php)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/greensms/greensms)
+![Packagist Version](https://img.shields.io/packagist/v/greensms/greensms)
+[![PHP Composer](https://github.com/greensms-ru/greensms-php/actions/workflows/php.yml/badge.svg?event=release)](https://github.com/greensms-ru/greensms-php/actions/workflows/php.yml)
+
 ## Documentation
 
 The documentation for the GREENSMS API can be found [here][apidocs].
