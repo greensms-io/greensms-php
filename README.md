@@ -7,7 +7,7 @@ The documentation for the GREENSMS API can be found [here][apidocs].
 ## Installation
 
 ```bash
-composer require greeensms
+composer require greeensms/greeensms
 ```
 
 ## Sample Usage
