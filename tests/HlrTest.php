@@ -16,7 +16,7 @@ final class HlrTest extends TestCase
 
     public function testCanSendMessage()
     {
-        $phoneNum = $this->utility->getRandomPhone(79260000111, 79260999999);
+        $phoneNum = $this->utility->getRandomPhone(79262716632, 79154286567);
         $params = [
           'to' => $phoneNum,
         ];
