@@ -76,7 +76,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['alphaNum'],
+                'from' => [['regex', '/^([\.a-z0-9_-])+$/']],
                 'tag' => ['alphaNum'],
               ]
             ]
