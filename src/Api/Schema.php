@@ -76,7 +76,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['alphaNum'],
+                'from' => ['lengthMax', 12],
                 'tag' => ['alphaNum'],
               ]
             ]
@@ -85,7 +85,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['alphaNum'],
+                'from' => ['lengthMax', 12],
                 'cascase' => [['subset', ['sms', 'voice']]],
               ]
             ]
@@ -94,7 +94,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['required', 'alphaNum'],
+                'from' => ['required', ['lengthMax', 12]],
                 'tag' => ['alphaNum'],
               ]
             ]
