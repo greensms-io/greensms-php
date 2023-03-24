@@ -14,22 +14,22 @@ jobs:
     strategy:
       matrix:
         #@wontfix 'windows-latest', 'macos-latest'
-        operating-system: ['ubuntu-latest']
+        operating-system: ["ubuntu-latest"]
         #@wontfix v.5.3 conflicts with php-cs-fixer
         #@todo fix v.8 conflicts with phpunit
-        php-versions: ['5.6', '7.1', '7.4'] 
+        php-versions: ["7.1", "7.4", "8.2"]
         #phpunit-versions: ['latest']
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, intl, curl
           ini-values: post_max_size=256M, max_execution_time=180
-          #coverage: xdebug        
+          #coverage: xdebug
           #tools: php-cs-fixer, phpunit:${{ matrix.phpunit-versions }}
 
       - name: Validate composer.json and composer.lock
