@@ -1,16 +1,13 @@
 {
   "name": "greensms/greensms",
-  "description": "GREENSMS API: SMS, Call, Voice, VK, WhatsApp, Viber, HLR, Pay",
+  "description": "GREENSMS API: SMS, Viber, Voce, Call, HLR, Pay",
   "type": "library",
-  "version": "2.0.0",
   "keywords": [
     "greensms",
     "sms",
     "api",
     "rest",
-    "viber",
-    "whatsapp",
-    "hlr"
+    "viber"
   ],
   "homepage": "https://github.com/greensms-ru/greensms-php",
   "license": "MIT",

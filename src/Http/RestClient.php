@@ -62,7 +62,7 @@ class RestClient
 
         $headers = [
             'Content-Type' => 'application/json',
-            'User-Agent' => GreenSMSConstants::SDK_NAME. " ".GreenSMSConstants::SDK_VERSION,
+            'User-Agent' => Constants::SDK_NAME. " ".Constants::SDK_VERSION,
         ];
 
 
