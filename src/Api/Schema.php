@@ -116,6 +116,18 @@ class Schema
               ]
             ]
           ]),
+          'whatsapp' => array_merge_recursive($commonSchema, [
+            'v1' => [
+              'send' => [
+                'txt' => ['required', ['lengthMin', 1]],
+                'file' => ['lengthMax', 256],
+                'tag' => ['lengthMax', 36],
+              ],
+              'webook' => [
+                'url' => ['required', ['lengthMin', 11], ['lengthMax', 256]]
+              ]
+            ]
+          ]),
           'social' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
