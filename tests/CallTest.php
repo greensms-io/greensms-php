@@ -37,7 +37,7 @@ final class CallTest extends TestCase
             'toll_free' => 'true'
         ];
 
-        $response = $this->utility->getInstance()->call->send($params);
+        $response = $this->utility->getInstance()->call->receive($params);
         $this->assertObjectHasAttribute('request_id', $response);
         $this->assertObjectHasAttribute('number', $response);
         return $requestId;
