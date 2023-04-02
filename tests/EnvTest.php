@@ -1,9 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+
 
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
+use GreenSMS\Tests\TestCase;
 
 final class EnvTest extends TestCase
 {
