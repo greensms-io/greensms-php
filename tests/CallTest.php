@@ -19,7 +19,7 @@ final class CallTest extends TestCase
     {
         $phoneNum = $this->utility->getRandomPhone();
         $params = [
-          'to' => $phoneNum,
+            'to' => $phoneNum,
         ];
 
         $response = $this->utility->getInstance()->call->send($params);
@@ -28,6 +28,21 @@ final class CallTest extends TestCase
         $requestId = $response->request_id;
         return $requestId;
     }
+
+    public function testCanReceive()
+    {
+        $phoneNum = $this->utility->getRandomPhone();
+        $params = [
+            'to' => $phoneNum,
+            'toll_free' => 'true'
+        ];
+
+        $response = $this->utility->getInstance()->call->send($params);
+        $this->assertObjectHasAttribute('request_id', $response);
+        $this->assertObjectHasAttribute('number', $response);
+        return $requestId;
+    }
+
 
     /**
      * @depends testCanSendMessage

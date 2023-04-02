@@ -45,8 +45,4 @@ final class TokenTest extends TestCase
             $this->assertEquals('Authorization declined', $e->getMessage());
         }
     }
-
-    public function testRaisesExceptionOnTokenExpiry()
-    {
-    }
 }

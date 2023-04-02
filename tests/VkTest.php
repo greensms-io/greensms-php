@@ -6,7 +6,7 @@ use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
 
-final class VoiceTest extends TestCase
+final class VkTest extends TestCase
 {
     private $utility = null;
 
@@ -21,10 +21,10 @@ final class VoiceTest extends TestCase
         $params = [
           'to' => $phoneNum,
           'txt' => '1127',
-          'language' => 'en'
+          'from' => 'GreenSMS'
         ];
 
-        $response = $this->utility->getInstance()->voice->send($params);
+        $response = $this->utility->getInstance()->vk->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
         return $response->request_id;
     }
@@ -35,15 +35,15 @@ final class VoiceTest extends TestCase
     public function testCanFetchStatus($requestId)
     {
         sleep(2);
-        $response = $this->utility->getInstance()->voice->status(['id' => $requestId, 'extended' => true ]);
+        $response = $this->utility->getInstance()->vk->status(['id' => $requestId, 'extended' => true ]);
         $this->assertObjectHasAttribute('status', $response);
     }
 
     public function testRaisesValidationException()
     {
         try {
-            $response = $this->utility->getInstance()->voice->send([]);
-            $this->fail("Shouldn't send Voice without parameters");
+            $response = $this->utility->getInstance()->vk->send([]);
+            $this->fail("Shouldn't send Vk without parameters");
         } catch (Exception $e) {
             $this->assertObjectHasAttribute('message', $e);
             $this->assertEquals('Validation Error', $e->getMessage());
