@@ -54,6 +54,5 @@ jobs:
         run: composer dump-autoload
 
       - name: Run test suite
+        if: ${{ matrix.php-versions == '8.2' }}
         run: composer run-script test
-        with:
-          php-version: "8.2"
