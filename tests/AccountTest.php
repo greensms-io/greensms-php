@@ -9,18 +9,18 @@ final class AccountTest extends TestCase
 {
     private $utility = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->utility = new Utility();
     }
 
-    public function testCanFetchBalance()
+    public function testCanFetchBalance(): void
     {
         $response = $this->utility->getInstance()->account->balance();
         $this->assertObjectHasAttribute('balance', $response);
     }
 
-    public function testCanFetchToken()
+    public function testCanFetchToken(): void
     {
         $response = $this->utility->getInstance()->account->token(['expire' => 10]);
         $this->assertObjectHasAttribute('access_token', $response);
