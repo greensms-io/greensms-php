@@ -50,13 +50,13 @@ class Schema
             'v1' => [
               'send' => [
                 'voice' => [['subset', ['true', 'false']]],
-                'tag' => ['lengthMax', 36],
+                'tag' => [['lengthMax', 36]],
                 'language' => [['subset', ['ru', 'en']]]
               ],
               'receive' => [
                 'to' => self::getToSchema(),
                 'toll_free' => [['subset', ['true', 'false']]],
-                'tag' => ['lengthMax', 36],
+                'tag' => [['lengthMax', 36]],
               ]
             ]
           ]) ,
@@ -73,7 +73,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 5], ['regex', '/^[0-9]+$/']],
-                'tag' => ['lengthMax', 36],
+                'tag' => [['lengthMax', 36]],
                 'language' => [['subset', ['ru', 'en']]]
               ]
             ]
@@ -83,7 +83,7 @@ class Schema
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 2048]],
                 'from' => ['required',['lengthMax', 11], ['lengthMin', 1]],
-                'tag' => ['lengthMax', 36],
+                'tag' => [['lengthMax', 36]],
                 'cascade' => [['subset', ['viber', 'sms', 'voice']]]
               ]
             ]
@@ -92,7 +92,7 @@ class Schema
             'v1' => [
               'send' => [
                 'amount' => [ 'required','numeric', ['min', 1]],
-                'tag' => ['lengthMax', 36],
+                'tag' => [['lengthMax', 36]],
                 'card' => [['lengthMin', 11], ['lengthMax', 14]]
               ],
             ]
@@ -101,9 +101,9 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 918]],
-                'from' => ['lengthMax', 12],
-                'tag' => ['lengthMax', 36],
-                'hidden' => ['lengthMax', 918]
+                'from' => [['lengthMax', 12]],
+                'tag' => [['lengthMax', 36]],
+                'hidden' => [['lengthMax', 918]]
               ]
             ]
           ]),
@@ -111,7 +111,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['lengthMax', 12],
+                'from' => [['lengthMax', 12]],
                 'cascade' => [['subset', ['sms', 'voice']]],
               ]
             ]
@@ -120,8 +120,8 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'file' => ['lengthMax', 256],
-                'tag' => ['lengthMax', 36],
+                'file' => [['lengthMax', 256]],
+                'tag' => [['lengthMax', 36]],
               ],
               'webook' => [
                 'url' => ['required', ['lengthMin', 11], ['lengthMax', 256]]
