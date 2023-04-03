@@ -88,15 +88,20 @@ class Schema
               ]
             ]
           ]),
-          'pay' => array_merge_recursive($commonSchema, [
+          'pay' => [
             'v1' => [
               'send' => [
+                'to' => self::getToSchema(),
                 'amount' => [ 'required','numeric', ['min', 1]],
                 'tag' => [['lengthMax', 36]],
                 'card' => [['lengthMin', 11], ['lengthMax', 14]]
               ],
+              'status' => [
+                'id' => ['required'],
+                'extended' => [['subset', ['true', 'false']]]
+              ]
             ]
-          ]),
+          ],
           'sms' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
