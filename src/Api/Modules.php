@@ -38,6 +38,10 @@ class Modules
                   'args'=> ['params'],
                   'method'=> 'POST',
                 ],
+                'receive'=> [
+                    'args'=> ['params'],
+                    'method'=> 'POST',
+                  ],
                 'status'=> [
                   'args'=> ['params'],
                   'method'=> 'GET',
