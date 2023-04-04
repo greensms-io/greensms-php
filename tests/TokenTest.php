@@ -1,15 +1,16 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+
 
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
+use GreenSMS\Tests\TestCase;
 
 final class TokenTest extends TestCase
 {
     private $utility = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->utility = new Utility();
     }
@@ -43,9 +44,5 @@ final class TokenTest extends TestCase
         } catch (Exception $e) {
             $this->assertEquals('Authorization declined', $e->getMessage());
         }
-    }
-
-    public function testRaisesExceptionOnTokenExpiry()
-    {
     }
 }

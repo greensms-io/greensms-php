@@ -38,6 +38,10 @@ class Modules
                   'args'=> ['params'],
                   'method'=> 'POST',
                 ],
+                'receive'=> [
+                    'args'=> ['params'],
+                    'method'=> 'POST',
+                  ],
                 'status'=> [
                   'args'=> ['params'],
                   'method'=> 'GET',
@@ -83,6 +87,21 @@ class Modules
                   ]
               ]
           ],
+          'vk' => [
+            'schema' => $schema['vk'],
+            'versions' => [
+                'v1' => [
+                    'send' => [
+                        'args' => ['params'],
+                        'method' => 'POST',
+                    ],
+                    'status' => [
+                        'args' => ['params'],
+                        'method' => 'GET',
+                    ],
+                ]
+            ]
+        ],
           'pay' => [
               'schema' => $schema['pay'],
               'versions' => [

@@ -4,6 +4,8 @@ namespace GreenSMS\Http;
 
 use GreenSMS\Utils\Helpers;
 use GreenSMS\Http\RestException;
+use GreenSMS\Constants;
+
 
 class RestClient
 {
@@ -59,7 +61,8 @@ class RestClient
         }
 
         $headers = [
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
+            'User-Agent' => Constants::SDK_NAME. " ".Constants::SDK_VERSION,
         ];
 
 

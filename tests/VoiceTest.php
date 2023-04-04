@@ -1,15 +1,16 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+
 
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
+use GreenSMS\Tests\TestCase;
 
 final class VoiceTest extends TestCase
 {
     private $utility = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->utility = new Utility();
     }
@@ -20,7 +21,7 @@ final class VoiceTest extends TestCase
         $params = [
           'to' => $phoneNum,
           'txt' => '1127',
-          'lang' => 'en'
+          'language' => 'en'
         ];
 
         $response = $this->utility->getInstance()->voice->send($params);

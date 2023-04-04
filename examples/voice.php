@@ -3,7 +3,8 @@ include_once('init.php');
 
 $response = $client->voice->send([
   'to' => '79260000121',
-  'txt' => '1221'
+  'txt' => '1221',
+  'language' => 'en',
 ]);
 
 echo "Voice Request Id: " . $response->request_id;

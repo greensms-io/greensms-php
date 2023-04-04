@@ -1,24 +1,38 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+
 
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
+use GreenSMS\Tests\TestCase;
 
 final class CallTest extends TestCase
 {
     private $utility = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->utility = new Utility();
+    }
+
+    public function testCanReceive()
+    {
+        $phoneNum = $this->utility->getRandomPhone();
+        $params = [
+            'to' => $phoneNum,
+            'toll_free' => 'true'
+        ];
+
+        $response = $this->utility->getInstance()->call->receive($params);
+        $this->assertObjectHasAttribute('request_id', $response);
+        $this->assertObjectHasAttribute('number', $response);
     }
 
     public function testCanSendMessage()
     {
         $phoneNum = $this->utility->getRandomPhone();
         $params = [
-          'to' => $phoneNum,
+            'to' => $phoneNum,
         ];
 
         $response = $this->utility->getInstance()->call->send($params);

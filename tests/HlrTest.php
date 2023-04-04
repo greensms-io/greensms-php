@@ -1,22 +1,23 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+
 
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
+use GreenSMS\Tests\TestCase;
 
 final class HlrTest extends TestCase
 {
     private $utility = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->utility = new Utility();
     }
 
     public function testCanSendMessage()
     {
-        $phoneNum = $this->utility->getRandomPhone(79262716632, 79154286567);
+        $phoneNum = $this->utility->getRandomPhone(79150000000, 79150999999);
         $params = [
           'to' => $phoneNum,
         ];
