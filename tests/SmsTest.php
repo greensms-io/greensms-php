@@ -51,4 +51,10 @@ final class SmsTest extends TestCase
             $this->assertEquals('Validation Error', $e->getMessage());
         }
     }
+
+    public function testSendAndFetchWithDifferentArgSeparator()
+    {
+        ini_set('arg_separator.output', ';');
+        $this->testCanFetchStatus($this->testCanSendMessage());
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace GreenSMS\Http;
 
+use Exception;
 use GreenSMS\Utils\Helpers;
-use GreenSMS\Http\RestException;
 use GreenSMS\Constants;
 
 
@@ -53,13 +53,6 @@ class RestClient
         }
 
         $this->ch = curl_init();
-
-        if (strtolower($options['method']) === 'post') {
-            curl_setopt($this->ch, CURLOPT_POST, 1);
-        } else {
-            curl_setopt($this->ch, CURLOPT_POST, 0);
-        }
-
         $headers = [
             'Content-Type' => 'application/json',
             'User-Agent' => Constants::SDK_NAME. " ".Constants::SDK_VERSION,
@@ -88,8 +81,6 @@ class RestClient
             curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers_arr);
         }
 
-
-        $params_str = "";
         $params = [];
         if (!empty($this->defaultParams)) {
             $params = $this->defaultParams;
@@ -99,10 +90,13 @@ class RestClient
         }
 
         $url = $options['url'];
-        $params_str = http_build_query($params);
 
-        if (strlen($params_str) > 0) {
-            $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $params_str;
+        if (strtolower($options['method']) === 'post') {
+            curl_setopt($this->ch, CURLOPT_POST, true);
+            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
+        } elseif (strtolower($options['method']) === 'get') {
+            curl_setopt($this->ch, CURLOPT_POST, false);
+            $url = $this->concatenateUrlParameters($url, $params);
         }
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
@@ -110,16 +104,13 @@ class RestClient
         curl_setopt($this->ch, CURLOPT_HEADER, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
         $apiResult = curl_exec($this->ch);
-        $response = json_decode($apiResult, true);
 
+        $response = json_decode($apiResult, true);
         if (curl_errno($this->ch)) {
             $error = curl_error($this->ch);
             $response = new RestException($error->message, $error->code, $error->previous);
         }
-
         curl_close($this->ch);
 
         if (array_key_exists('error', $response)) {
@@ -131,5 +122,15 @@ class RestClient
         }
 
         return (object)$response;
+    }
+
+    private function concatenateUrlParameters($url, $params) {
+        $query = http_build_query($params, "", "&");
+        if (strpos($url, '?') === false) {
+            $url .= '?' . $query;
+        } else {
+            $url .= '&' . $query;
+        }
+        return $url;
     }
 }
