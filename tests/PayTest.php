@@ -49,4 +49,16 @@ final class PayTest extends TestCase
             $this->assertEquals('Validation Error', $e->getMessage());
         }
     }
+
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testFetchError()
+    {
+        try {
+            $response = $this->utility->getInstance()->pay->status(['id' => '12345', 'extended' => true ]);
+        } catch (Exception $e) {
+            $this->assertObjectHasAttribute('message', $e);
+        };
+    }
 }

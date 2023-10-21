@@ -22,9 +22,12 @@ class Utility
         return $phoneNum;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getRandomNumber($min, $max)
     {
-        return strval(rand($min, $max));
+        return strval(random_int($min, $max));
     }
 
     public function getInstanceWithEnv()

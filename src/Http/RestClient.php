@@ -38,6 +38,11 @@ class RestClient
         }
     }
 
+    /**
+     * @param $options
+     * @return object
+     * @throws RestException
+     */
     public function request($options)
     {
         if (is_null($options)) {
