@@ -1,26 +1,12 @@
 <?php
 include_once('init.php');
-
 $response = $client->whatsapp->send([
-  'to' => '79150000000',
-  'txt' => 'GreenSMS Node SDK',
-  'from' => '79150000000',
+  'to' => '79260000000',
+  'txt' => '1234 is your verification code.',
+  'from' => 'GREENSMS',
   'tag' => 'test-sdk-node'
 ]);
+printf("WhatsApp Request ID: %s\n", $response->request_id);
 
-echo "Whatsapp Request Id: " . $response->request_id;
-echo "\n\n";
-
-$response = $client->whatsapp->status([
-  'id' => '79442f1f-17a8-42bb-9f6f-4affc8788e7e',
-]);
-
-echo "Whatsapp Status: \n";
-print_r($response);
-
-$response = $client->whatsapp->webhook([
-  'url' => 'http://test.url',
-]);
-
-echo "Whatsapp Webhook: \n";
-print_r($response);
+$response = $client->whatsapp->status(['id' => $response->request_id]);
+printf("WhatsApp Status: %s\n", var_export($response, 1));
