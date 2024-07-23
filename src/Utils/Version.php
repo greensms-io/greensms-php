@@ -7,7 +7,8 @@ use GreenSMS\Utils\Helpers;
 class Version
 {
     const VERSIONS = [
-    'v1' => 'v1'
+    'v1' => 'v1',
+    'v4.0.0' => 'v4.0.0',
   ];
 
     public static function getVersion($version)

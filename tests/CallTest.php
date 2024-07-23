@@ -1,9 +1,8 @@
 <?php
 
 
-
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
-use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
 
 final class CallTest extends TestCase
@@ -61,5 +60,70 @@ final class CallTest extends TestCase
             $this->assertObjectHasAttribute('message', $e);
             $this->assertEquals('Validation Error', $e->getMessage());
         }
+    }
+
+    /** @dataProvider receiveParamsDataProvider*/
+    public function testReceiveParams($params)
+    {
+        $this->expectException(RestException::class);
+        $this->utility->getInstance()->call->receive($params);
+    }
+
+    public static function receiveParamsDataProvider(): iterable
+    {
+        return [
+            'minTo' => [[
+                'to' => str_repeat('1', 10),
+            ]],
+            'maxTo' => [[
+                'to' => str_repeat('1', 15),
+            ]],
+            'maxTag' => [[
+                'to' => '01234567890',
+                'tag' => str_repeat('1', 37),
+            ]],
+        ];
+    }
+
+    /** @dataProvider sendParamsDataProvider*/
+    public function testSendParams($params)
+    {
+        $this->expectException(RestException::class);
+        $this->utility->getInstance()->call->send($params);
+    }
+
+    public static function sendParamsDataProvider(): iterable
+    {
+        return [
+            'minTo' => [[
+                'to' => str_repeat('1', 10),
+            ]],
+            'maxTo' => [[
+                'to' => str_repeat('1', 15),
+            ]],
+            'maxTag' => [[
+                'to' => '01234567890',
+                'tag' => str_repeat('s', 37),
+            ]],
+        ];
+    }
+
+    /** @dataProvider statusParamsDataProvider*/
+    public function testStatusParams($params)
+    {
+        $this->expectException(RestException::class);
+        $this->utility->getInstance()->call->status($params);
+    }
+
+    public static function statusParamsDataProvider(): iterable
+    {
+        return [
+            'minId' => [[
+                'id' => str_repeat('s', 35),
+            ]],
+            'maxId' => [[
+                'id' => str_repeat('s', 37),
+            ]],
+        ];
     }
 }

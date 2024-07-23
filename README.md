@@ -61,7 +61,7 @@ echo "Balance : " . $response->balance. "\n";
 
 ## Compatibility
 
-`greensms-php` is compatible with PHP 5.5 and PHP 7+ onwards until the latest PHP Version
+`greensms-php` is compatible with PHP 7.3+ onwards until the latest PHP Version
 
 ## Methods
 
@@ -78,7 +78,7 @@ echo "Balance : " . $response->balance. "\n";
 
 ## Getting help
 
-If you need help installing or using the library, please contact us: [support@greensms.ru](mailto:support@greensms.ru).
+If you need help installing or using the library, please contact us: [support@greensms.io](mailto:support@greensms.io).
 
 If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
@@ -103,4 +103,4 @@ GreenSMS has all the unit tests defined under **tests** folder with `*Test.php` 
 ./vendor/bin/phpunit tests
 ```
 
-[apidocs]: https://api.greensms.ru/
+[apidocs]: https://api.greensms.io/

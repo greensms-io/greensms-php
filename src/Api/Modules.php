@@ -2,15 +2,13 @@
 
 namespace GreenSMS\Api;
 
-use GreenSMS\Api\Schema;
-
 class Modules
 {
-    public static function getModules()
+    public static function getModules(): array
     {
         $schema = Schema::getSchema();
 
-        $modules = [
+        return [
           'account' => [
             'schema' => $schema['account'],
             'versions' => [
@@ -26,8 +24,66 @@ class Modules
                 'tariff' => [
                   'args' => null,
                   'method' => 'GET'
-                ]
-              ]
+                ],
+              ],
+                  'v4.0.0' => [
+                      'blacklist' => [
+                          'get' => [
+                              'args' => null,
+                              'method' => 'GET',
+                          ],
+                          'add' => [
+                              'args' => ['params'],
+                              'method' => 'POST',
+                          ],
+                          'delete' => [
+                              'args' => ['params'],
+                              'method' => 'DELETE',
+                          ],
+                      ],
+                      'limits' => [
+                          'get' => [
+                              'args' => null,
+                              'method' => 'GET',
+                          ],
+                          'set' => [
+                              'args' => null,
+                              'method' => 'POST',
+                          ],
+                          'delete' => [
+                              'args' => null,
+                              'method' => 'DELETE',
+                          ],
+                      ],
+                      'webhook' => [
+                          'get' => [
+                              'args' => null,
+                              'method' => 'GET',
+                          ],
+                          'set' => [
+                              'args' => null,
+                              'method' => 'POST',
+                          ],
+                          'delete' => [
+                              'args' => null,
+                              'method' => 'DELETE',
+                          ],
+                      ],
+                      'whitelist' => [
+                          'get' => [
+                              'args' => null,
+                              'method' => 'GET',
+                          ],
+                          'add' => [
+                              'args' => null,
+                              'method' => 'POST',
+                          ],
+                          'delete' => [
+                              'args' => null,
+                              'method' => 'DELETE',
+                          ],
+                      ],
+                  ],
             ]
           ],
           'call' => [
@@ -177,23 +233,6 @@ class Modules
                   ]
               ]
           ],
-          'social' => [
-              'schema' => $schema['social'],
-              'versions' => [
-                  'v1' => [
-                      'send' => [
-                          'args' => ['params'],
-                          'method' => 'POST',
-                      ],
-                      'status' => [
-                          'args' => ['params'],
-                          'method' => 'GET',
-                      ],
-                  ]
-              ]
-          ],
         ];
-
-        return $modules;
     }
 }
