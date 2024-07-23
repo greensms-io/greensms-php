@@ -18,8 +18,10 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "vlucas/valitron": "^1.4"
+    "php": ">=7.3",
+    "vlucas/valitron": "^1.4",
+    "ext-curl": "*",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",

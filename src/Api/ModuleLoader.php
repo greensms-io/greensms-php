@@ -2,11 +2,8 @@
 
 namespace GreenSMS\Api;
 
-use GreenSMS\Api\Modules;
-use GreenSMS\Api\Module;
 use GreenSMS\Utils\Url;
 use GreenSMS\Utils\Helpers;
-use GreenSMS\Api\MethodInvoker;
 
 class ModuleLoader
 {
@@ -40,44 +37,13 @@ class ModuleLoader
 
 
             foreach ($moduleVersions as $version => $versionFunctions) {
-                if (!property_exists($this->moduleMap->{$moduleName}, $version)) {
-                    $this->moduleMap->{$moduleName}->{$version} = new MethodInvoker;
+
+                if ($version === 'v1') {
+                    $this->addModuleMapV1($versionFunctions, $moduleInfo, $version, $isStaticModule, $moduleName, $sharedOptions, $currentVersion);
+                } elseif ($version === 'v1.0.1') {
+                    $this->addModuleMapV1_0_1($versionFunctions, $moduleInfo, $version, $isStaticModule, $moduleName, $sharedOptions, $currentVersion);
                 }
 
-                foreach ($versionFunctions as $functionName => $functionDefinition) {
-                    $moduleSchema = null;
-                    $schemaExists = self::doesSchemaExists($moduleInfo, $version, $functionName);
-                    if ($schemaExists) {
-                        $moduleSchema = $moduleInfo['schema'][$version][$functionName];
-                    }
-
-                    $urlParts = [];
-                    if (!$isStaticModule) {
-                        array_push($urlParts, $moduleName);
-                    }
-
-                    array_push($urlParts, $functionName);
-                    $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
-
-                    $functionOptions = [
-                      'url' => $apiUrl,
-                      'definition' => $functionDefinition,
-                      'sharedOptions' => $sharedOptions,
-                      'moduleSchema' => $moduleSchema
-                    ];
-
-
-                    $this->moduleMap->{$moduleName}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
-
-                    if ($version === $currentVersion) {
-                        $this->moduleMap->{$moduleName}->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
-                    }
-
-                    if ($isStaticModule) {
-                        $this->moduleMap->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
-                        unset($this->moduleMap->{$moduleName});
-                    }
-                }
             }
         }
 
@@ -109,5 +75,88 @@ class ModuleLoader
         $module = new Module($restClient, $moduleSchema, $requestArgs);
         $functionInstance = array($module, 'apiFunction');
         return $functionInstance;
+    }
+
+    private function addModuleMapV1($versionFunctions, $moduleInfo, $version, $isStaticModule, $moduleName, $sharedOptions, $currentVersion)
+    {
+        if (!property_exists($this->moduleMap->{$moduleName}, $version)) {
+            $this->moduleMap->{$moduleName}->{$version} = new MethodInvoker;
+        }
+
+        foreach ($versionFunctions as $functionName => $functionDefinition) {
+            $moduleSchema = null;
+            $schemaExists = self::doesSchemaExists($moduleInfo, $version, $functionName);
+            if ($schemaExists) {
+                $moduleSchema = $moduleInfo['schema'][$version][$functionName];
+            }
+
+            $urlParts = [];
+            if (!$isStaticModule) {
+                array_push($urlParts, $moduleName);
+            }
+
+            array_push($urlParts, $functionName);
+            $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
+
+            $functionOptions = [
+                'url' => $apiUrl,
+                'definition' => $functionDefinition,
+                'sharedOptions' => $sharedOptions,
+                'moduleSchema' => $moduleSchema
+            ];
+
+            $this->moduleMap->{$moduleName}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
+
+            if ($version === $currentVersion) {
+                $this->moduleMap->{$moduleName}->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
+            }
+
+            if ($isStaticModule) {
+                $this->moduleMap->{$functionName} = $this->moduleMap->{$moduleName}->{$version}->{$functionName};
+                unset($this->moduleMap->{$moduleName});
+            }
+        }
+    }
+
+    private function addModuleMapV1_0_1($functions, $moduleInfo, $version, $isStaticModule, $moduleName, $sharedOptions, $currentVersion)
+    {
+
+        foreach ($functions as $prop => $definitions) {
+            if (!property_exists($this->moduleMap->{$moduleName}, $prop)) {
+                $this->moduleMap->{$moduleName}->{$prop} = new MethodInvoker;
+            }
+            if (!property_exists($this->moduleMap->{$moduleName}->{$prop}, $version)) {
+                $this->moduleMap->{$moduleName}->{$prop}->{$version} = new MethodInvoker;
+            }
+
+            foreach ($definitions as $functionName => $functionDefinition) {
+                $moduleSchema = null;
+                $schemaExists = self::doesSchemaExists($moduleInfo, $version, $functionName);//todo
+                if ($moduleInfo['schema'][$version][$prop][$functionName]) {
+                    $moduleSchema = $moduleInfo['schema'][$version][$prop][$functionName];
+                }
+
+                $urlParts = [];
+                if (!$isStaticModule) {
+                    array_push($urlParts, $moduleName);
+                }
+
+//                array_push($urlParts, $functionName);
+                array_push($urlParts, $prop);
+                $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
+
+                $functionOptions = [
+                    'url' => $apiUrl,
+                    'definition' => $functionDefinition,
+                    'sharedOptions' => $sharedOptions,
+                    'moduleSchema' => $moduleSchema
+                ];
+
+
+                $this->moduleMap->{$moduleName}->{$prop}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
+                $this->moduleMap->{$moduleName}->{$prop}->{$functionName} = $this->moduleMap->{$moduleName}->{$prop}->{$version}->{$functionName};
+
+            }
+        }
     }
 }

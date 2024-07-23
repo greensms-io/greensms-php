@@ -2,19 +2,18 @@
 
 namespace GreenSMS\Utils;
 
-use \Exception;
-use GreenSMS\Utils\Helpers;
+use Exception;
 
 const BASE_URL = 'https://api3.greensms.ru';
 
 class Url
 {
-    public static function baseUrl()
+    public static function baseUrl(): string
     {
         return BASE_URL;
     }
 
-    public static function buildUrl($baseUrl, $parts)
+    public static function buildUrl($baseUrl, $parts): string
     {
         if (Helpers::isNullOrEmpty($baseUrl)) {
             throw new Exception('Base URL cannot be empty');
@@ -22,9 +21,8 @@ class Url
 
         array_unshift($parts, $baseUrl);
         array_walk_recursive($parts, 'GreenSMS\Utils\Url::stripTrailingSlash');
-        $url = implode('/', $parts);
 
-        return $url;
+        return implode('/', $parts);
     }
 
     public static function stripTrailingSlash(&$component)

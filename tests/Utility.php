@@ -6,7 +6,7 @@ use GreenSMS\GreenSMS;
 
 class Utility
 {
-    public function getInstance()
+    public function getInstance(): GreenSMS
     {
         $client = new GreenSMS([
           'user' => 'test',

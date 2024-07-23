@@ -1,9 +1,6 @@
 <?php
 
-
-
 use GreenSMS\Tests\Utility;
-use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
 
 final class GeneralTest extends TestCase

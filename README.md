@@ -61,7 +61,7 @@ echo "Balance : " . $response->balance. "\n";
 
 ## Compatibility
 
-`greensms-php` is compatible with PHP 5.5 and PHP 7+ onwards until the latest PHP Version
+`greensms-php` is compatible with PHP 7.3+ onwards until the latest PHP Version
 
 ## Methods
 
