@@ -120,8 +120,8 @@ class RestClient
         $response = json_decode($apiResult, true);
 
         if (curl_errno($this->ch)) {
-                $error = curl_error($this->ch);
-                $response = new RestException($error, curl_getinfo($this->ch)['http_code']);
+            $error = curl_error($this->ch);
+            $response = new RestException($error, curl_getinfo($this->ch)['http_code']);
         } elseif (!is_array($response) && curl_getinfo($this->ch)['http_code'] >= 400 ) {
             $response = new RestException($apiResult, curl_getinfo($this->ch)['http_code']);
         }

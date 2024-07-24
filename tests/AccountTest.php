@@ -108,40 +108,4 @@ final class AccountTest extends TestCase
         $response = $this->utility->getInstance()->account->whitelist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
         $this->assertEquals((object)['success' => 1], $response);
     }
-
-    public function testBlackList()
-    {
-        $response = $this->utility->getInstance()->account->blacklist->delete(['to' => '70000000000']);
-        $this->assertEquals((object)['success' => 1], $response);
-        $response = $this->utility->getInstance()->account->blacklist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
-        $this->assertEquals((object)['success' => 1], $response);
-        $this->utility->getInstance()->account->blacklist->get();
-    }
-
-    public function testLimits()
-    {
-        $response = $this->utility->getInstance()->account->limits->delete(['type' => 'IP', 'value' => '8.8.8.8,1.1.1.1']);
-        $this->assertEquals((object)['success' => 1], $response);
-        $this->utility->getInstance()->account->limits->get();
-        $response = $this->utility->getInstance()->account->limits->set(['type' => 'IP', 'module' => 'ALL', 'value' => '1.1.1.1,8.8.8.8', 'comment' => 'test']);
-        $this->assertEquals((object)['success' => 1], $response);
-    }
-
-    public function testWebhook()
-    {
-        $response = $this->utility->getInstance()->account->webhook->delete();
-        $this->assertEquals((object)['success' => 1], $response);
-        $this->utility->getInstance()->account->webhook->get();
-        $response = $this->utility->getInstance()->account->webhook->set(['url' => 'http://localhost', 'token' => 'test']);
-        $this->assertEquals((object)['success' => 1], $response);
-    }
-
-    public function testWhitelist()
-    {
-        $response = $this->utility->getInstance()->account->whitelist->delete(['to' => '70000000000']);
-        $this->assertEquals((object)['success' => 1], $response);
-        $this->utility->getInstance()->account->whitelist->get();
-        $response = $this->utility->getInstance()->account->whitelist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
-        $this->assertEquals((object)['success' => 1], $response);
-    }
 }

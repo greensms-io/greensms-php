@@ -130,11 +130,6 @@ class ModuleLoader
             }
 
             foreach ($definitions as $functionName => $functionDefinition) {
-                $moduleSchema = null;
-                if ($moduleInfo['schema'][$version][$prop][$functionName]) {
-                    $moduleSchema = $moduleInfo['schema'][$version][$prop][$functionName];
-                }
-
                 $urlParts = [];
                 if (!$isStaticModule) {
                     array_push($urlParts, $moduleName);
@@ -147,7 +142,7 @@ class ModuleLoader
                     'url' => $apiUrl,
                     'definition' => $functionDefinition,
                     'sharedOptions' => $sharedOptions,
-                    'moduleSchema' => $moduleSchema
+                    'moduleSchema' => $this->getSchema($moduleInfo['schema'] ?? [], $version, $prop, $functionName),
                 ];
 
 
@@ -156,5 +151,18 @@ class ModuleLoader
 
             }
         }
+    }
+
+    private function getSchema($schema, $version, $prop, $functionName): ?array
+    {
+        if (!array_key_exists($version, $schema)) {
+            return null;
+        } elseif (!array_key_exists($prop, $schema[$version])) {
+            return null;
+        } elseif (!array_key_exists($functionName, $schema[$version][$prop])) {
+            return null;
+        }
+
+        return $schema[$version][$prop][$functionName];
     }
 }

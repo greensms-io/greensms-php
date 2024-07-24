@@ -1,6 +1,6 @@
 {
   "name": "greensms/greensms",
-  "description": "GREENSMS API: SMS, Viber, Voce, Call, HLR, Pay",
+  "description": "GREENSMS API: SMS, WhatsApp, Viber, VK, Voice, Call, HLR",
   "type": "library",
   "keywords": [
     "greensms",
