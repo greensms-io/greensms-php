@@ -1,5 +1,6 @@
 <?php
 
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
@@ -44,37 +45,32 @@ final class AccountTest extends TestCase
 
     public function testRaisesExceptionOnInvalidCredentials()
     {
-        try {
-            $client = new GreenSMS([
-              'user' => 'randomusername',
-              'pass' => 'pass'
-            ]);
-            $client->account->balance();
-            $this->fail("Shouldn't allow operations on Invalid Credentials");
-        } catch (Exception $e) {
-            $this->assertObjectHasAttribute('message', $e);
-            $this->assertEquals('Authorization declined', $e->getMessage());
-        }
+        $client = new GreenSMS([
+          'user' => 'randomusername',
+          'pass' => 'pass'
+        ]);
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Authorization declined');
+        $this->expectExceptionCode(0);
+
+        $client->account->balance();
     }
 
     public function testRaisesExceptionOnInsufficientFunds()
     {
-        try {
-            $client = new GreenSMS([
-              'user' => 'test_block_user',
-              'pass' => '183456'
-            ]);
+        $client = new GreenSMS([
+            'user' => 'test_block_user',
+            'pass' => '183456'
+        ]);
 
-            $client->sms->send([
-              'to' => $this->utility->getRandomPhone(),
-              'txt' => 'Test134'
-            ]);
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Insufficient funds');
+        $this->expectExceptionCode(-1);
 
-            $this->fail("Shouldn't allow send operations when Insufficient Funds");
-        } catch (Exception $e) {
-            $this->assertObjectHasAttribute('message', $e);
-            $this->assertEquals('Insufficient funds', $e->getMessage());
-        }
+        $client->sms->send([
+            'to' => $this->utility->getRandomPhone(),
+            'txt' => 'Test134'
+        ]);
     }
 
     public function testBlackList()

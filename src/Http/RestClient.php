@@ -112,20 +112,23 @@ class RestClient
         curl_setopt($this->ch, CURLOPT_HEADER, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0);
-//        curl_setopt($this->ch, CURLOPT_FAILONERROR,true);
+        if (isset($options['CURLOPT_TIMEOUT_MS'])) {
+            curl_setopt($this->ch, CURLOPT_TIMEOUT_MS, $options['CURLOPT_TIMEOUT_MS']);
+        }
 
         $apiResult = curl_exec($this->ch);
         $response = json_decode($apiResult, true);
 
         if (curl_errno($this->ch)) {
-            $error = curl_error($this->ch);
-            $response = new RestException($error->message, $error->code, $error->previous);
-//            $response = new RestException($error, curl_getinfo($this->ch)['http_code']);
+                $error = curl_error($this->ch);
+                $response = new RestException($error, curl_getinfo($this->ch)['http_code']);
+        } elseif (!is_array($response) && curl_getinfo($this->ch)['http_code'] >= 400 ) {
+            $response = new RestException($apiResult, curl_getinfo($this->ch)['http_code']);
         }
 
         curl_close($this->ch);
 
-        if (array_key_exists('error', $response)) {
+        if (is_array($response) && array_key_exists('error', $response)) {
             throw new RestException($response['error'], $response['code']);
         }
 
