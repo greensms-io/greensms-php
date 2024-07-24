@@ -1,9 +1,6 @@
 <?php
 
-
-
 use GreenSMS\Tests\Utility;
-use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
 
 final class GeneralTest extends TestCase
@@ -18,7 +15,7 @@ final class GeneralTest extends TestCase
     public function testCanFetchLookup()
     {
         $response = $this->utility->getInstance()->whois->lookup(['to' => '79260000000']);
-        $this->assertObjectHasAttribute('def', $response);
+        $this->assertObjectHasAttribute('operator', $response);
         $this->assertObjectHasAttribute('region', $response);
     }
 

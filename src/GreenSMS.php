@@ -2,13 +2,17 @@
 
 namespace GreenSMS;
 
+use Exception;
+use GreenSMS\Api\MethodInvoker;
+use GreenSMS\Api\ModuleLoader;
+use GreenSMS\Http\RestClient;
+use GreenSMS\IdeHelper\Account;
 use GreenSMS\Utils\Url;
 use GreenSMS\Utils\Version;
-use GreenSMS\Http\RestClient;
-use GreenSMS\Api\ModuleLoader;
-use \Exception;
-use GreenSMS\Api\MethodInvoker;
 
+/**
+ * @property Account $account
+ */
 class GreenSMS extends MethodInvoker
 {
     protected $token;

@@ -24,19 +24,18 @@ final class HlrTest extends TestCase
 
         $response = $this->utility->getInstance()->hlr->send($params);
         $this->assertObjectHasAttribute('request_id', $response);
-        return $response->request_id;
+        return [
+            'id' => $response->request_id,
+            'to' => $phoneNum,
+        ];
     }
 
     /**
      * @depends testCanSendMessage
      */
-    public function testCanFetchStatus($requestId)
+    public function testCanFetchStatus($params)
     {
         sleep(2);
-        $params = [
-          'id' => $requestId,
-          'to' => $this->utility->getRandomPhone()
-        ];
         $response = $this->utility->getInstance()->hlr->status($params);
         $this->assertObjectHasAttribute('status', $response);
     }

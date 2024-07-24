@@ -16,6 +16,11 @@ class Schema
         return $idSchema;
     }
 
+    private static function getModuleSchema()
+    {
+        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "HLR", "PAY"]]];
+    }
+
     private static function getCommonSchema()
     {
         $commonSchema = [
@@ -44,14 +49,54 @@ class Schema
               'token' => [
                 'expire' => ['integer', ['min', 0]],
               ]
-            ]
+            ],
+              'v4.0.0' => [
+                  'blacklist' => [
+                      'add' => [
+                          'to' => $toSchema,
+                          'module' => self::getModuleSchema(),
+                          'comment' => [['lengthMax', 50]],
+                      ],
+                      'delete' => [
+                          'to' => $toSchema,
+                      ],
+                  ],
+                  'limits' => [
+                      'set' => [
+                          'type' =>  ['required',['subset', ['IP']]],
+                          'value' => ['required',['ipsCommaSeparator']],
+                          'module' => self::getModuleSchema(),
+                          'comment' => [['lengthMax', 50]],
+                      ],
+                      'delete' => [
+                          'type' =>  ['required',['subset', ['IP']]],
+                          'module' => self::getModuleSchema(),
+                      ],
+                  ],
+                  'webhook' => [
+                      'set' => [
+                          'url' =>  ['required',['url'], ['lengthMax', 1024]],
+                          'token' => [['lengthMax', 256]],
+                      ],
+                  ],
+                  'whitelist' => [
+                      'set' => [
+                          'to' => $toSchema,
+                          'module' => self::getModuleSchema(),
+                          'comment' => [['lengthMax', 50]],
+                      ],
+                      'delete' => [
+                          'to' => $toSchema,
+                      ],
+                  ],
+              ],
           ],
           'call' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
                 'voice' => [['subset', ['true', 'false']]],
                 'tag' => [['lengthMax', 36]],
-                'language' => [['subset', ['ru', 'en']]]
+                'lang' => [['subset', ['ru', 'en']]]
               ],
               'receive' => [
                 'to' => self::getToSchema(),
@@ -74,7 +119,7 @@ class Schema
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 5], ['regex', '/^[0-9]+$/']],
                 'tag' => [['lengthMax', 36]],
-                'language' => [['subset', ['ru', 'en']]]
+                'lang' => [['subset', ['ru', 'en']]]
               ]
             ]
           ]),
@@ -106,7 +151,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 918]],
-                'from' => [['lengthMax', 12]],
+                'from' => [['lengthMax', 11]],
                 'tag' => [['lengthMax', 36]],
                 'hidden' => [['lengthMax', 918]]
               ]
@@ -116,7 +161,7 @@ class Schema
             'v1' => [
               'send' => [
                 'txt' => ['required', ['lengthMin', 1]],
-                'from' => [['lengthMax', 12]],
+                'from' => [['lengthMin', 1],['lengthMax', 11]],
                 'cascade' => [['subset', ['sms', 'voice']]],
               ]
             ]
@@ -124,22 +169,11 @@ class Schema
           'whatsapp' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
-                'txt' => ['required', ['lengthMin', 1]],
+                  'from' => ['required'],
+                'txt' => ['required', ['lengthMin', 1],['lengthMax', 1000]],
                 'file' => [['lengthMax', 256]],
                 'tag' => [['lengthMax', 36]],
               ],
-              'webook' => [
-                'url' => ['required', ['lengthMin', 11], ['lengthMax', 256]]
-              ]
-            ]
-          ]),
-          'social' => array_merge_recursive($commonSchema, [
-            'v1' => [
-              'send' => [
-                'txt' => ['required', ['lengthMin', 1]],
-                'from' => ['required', ['lengthMax', 12]],
-                'tag' => ['alphaNum'],
-              ]
             ]
           ]),
         ];

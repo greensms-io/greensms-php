@@ -2,6 +2,7 @@
 
 namespace GreenSMS\Http;
 
+use Exception;
 use GreenSMS\Utils\Helpers;
 use GreenSMS\Http\RestException;
 use GreenSMS\Constants;
@@ -54,17 +55,10 @@ class RestClient
 
         $this->ch = curl_init();
 
-        if (strtolower($options['method']) === 'post') {
-            curl_setopt($this->ch, CURLOPT_POST, 1);
-        } else {
-            curl_setopt($this->ch, CURLOPT_POST, 0);
-        }
-
         $headers = [
             'Content-Type' => 'application/json',
             'User-Agent' => Constants::SDK_NAME. " ".Constants::SDK_VERSION,
         ];
-
 
         if ($this->token) {
             $headers['Authorization'] = 'Bearer '. $this->token;
@@ -89,7 +83,6 @@ class RestClient
         }
 
 
-        $params_str = "";
         $params = [];
         if (!empty($this->defaultParams)) {
             $params = $this->defaultParams;
@@ -99,10 +92,19 @@ class RestClient
         }
 
         $url = $options['url'];
-        $params_str = http_build_query($params);
 
-        if (strlen($params_str) > 0) {
-            $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $params_str;
+        if (strtolower($options['method']) === 'post') {
+            curl_setopt($this->ch, CURLOPT_POST, 1);
+            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
+        } elseif (strtolower($options['method']) === 'delete') {
+            curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($params));
+        } else {
+            curl_setopt($this->ch, CURLOPT_POST, 0);
+            $params_str = http_build_query($params, '', '&');
+            if (strlen($params_str) > 0) {
+                $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $params_str;
+            }
         }
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
@@ -110,19 +112,23 @@ class RestClient
         curl_setopt($this->ch, CURLOPT_HEADER, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0);
-
+        if (isset($options['CURLOPT_TIMEOUT_MS'])) {
+            curl_setopt($this->ch, CURLOPT_TIMEOUT_MS, $options['CURLOPT_TIMEOUT_MS']);
+        }
 
         $apiResult = curl_exec($this->ch);
         $response = json_decode($apiResult, true);
 
         if (curl_errno($this->ch)) {
             $error = curl_error($this->ch);
-            $response = new RestException($error->message, $error->code, $error->previous);
+            $response = new RestException($error, curl_getinfo($this->ch)['http_code']);
+        } elseif (!is_array($response) && curl_getinfo($this->ch)['http_code'] >= 400 ) {
+            $response = new RestException($apiResult, curl_getinfo($this->ch)['http_code']);
         }
 
         curl_close($this->ch);
 
-        if (array_key_exists('error', $response)) {
+        if (is_array($response) && array_key_exists('error', $response)) {
             throw new RestException($response['error'], $response['code']);
         }
 

@@ -1,5 +1,6 @@
 <?php
 
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
@@ -44,36 +45,67 @@ final class AccountTest extends TestCase
 
     public function testRaisesExceptionOnInvalidCredentials()
     {
-        try {
-            $client = new GreenSMS([
-              'user' => 'randomusername',
-              'pass' => 'pass'
-            ]);
-            $client->account->balance();
-            $this->fail("Shouldn't allow operations on Invalid Credentials");
-        } catch (Exception $e) {
-            $this->assertObjectHasAttribute('message', $e);
-            $this->assertEquals('Authorization declined', $e->getMessage());
-        }
+        $client = new GreenSMS([
+          'user' => 'randomusername',
+          'pass' => 'pass'
+        ]);
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Authorization declined');
+        $this->expectExceptionCode(0);
+
+        $client->account->balance();
     }
 
     public function testRaisesExceptionOnInsufficientFunds()
     {
-        try {
-            $client = new GreenSMS([
-              'user' => 'test_block_user',
-              'pass' => '183456'
-            ]);
+        $client = new GreenSMS([
+            'user' => 'test_block_user',
+            'pass' => '183456'
+        ]);
 
-            $client->sms->send([
-              'to' => $this->utility->getRandomPhone(),
-              'txt' => 'Test134'
-            ]);
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Insufficient funds');
+        $this->expectExceptionCode(-1);
 
-            $this->fail("Shouldn't allow send operations when Insufficient Funds");
-        } catch (Exception $e) {
-            $this->assertObjectHasAttribute('message', $e);
-            $this->assertEquals('Insufficient funds', $e->getMessage());
-        }
+        $client->sms->send([
+            'to' => $this->utility->getRandomPhone(),
+            'txt' => 'Test134'
+        ]);
+    }
+
+    public function testBlackList()
+    {
+        $response = $this->utility->getInstance()->account->blacklist->delete(['to' => '70000000000']);
+        $this->assertEquals((object)['success' => 1], $response);
+        $response = $this->utility->getInstance()->account->blacklist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
+        $this->assertEquals((object)['success' => 1], $response);
+        $this->utility->getInstance()->account->blacklist->get();
+    }
+
+    public function testLimits()
+    {
+        $response = $this->utility->getInstance()->account->limits->delete(['type' => 'IP']);
+        $this->assertEquals((object)['success' => 1], $response);
+        $this->utility->getInstance()->account->limits->get();
+        $response = $this->utility->getInstance()->account->limits->set(['type' => 'IP', 'module' => 'ALL', 'value' => '1.1.1.1,8.8.8.8', 'comment' => 'test']);
+        $this->assertEquals((object)['success' => 1], $response);
+    }
+
+    public function testWebhook()
+    {
+        $response = $this->utility->getInstance()->account->webhook->delete();
+        $this->assertEquals((object)['success' => 1], $response);
+        $this->utility->getInstance()->account->webhook->get();
+        $response = $this->utility->getInstance()->account->webhook->set(['url' => 'http://localhost', 'token' => 'test']);
+        $this->assertEquals((object)['success' => 1], $response);
+    }
+
+    public function testWhitelist()
+    {
+        $response = $this->utility->getInstance()->account->whitelist->delete(['to' => '70000000000']);
+        $this->assertEquals((object)['success' => 1], $response);
+        $this->utility->getInstance()->account->whitelist->get();
+        $response = $this->utility->getInstance()->account->whitelist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
+        $this->assertEquals((object)['success' => 1], $response);
     }
 }
