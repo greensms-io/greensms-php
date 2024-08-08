@@ -10,6 +10,11 @@ class Url
 {
     public static function baseUrl(): string
     {
+        $envBaseUrl = getenv('GREENSMS_BASE_URL');
+        if (is_string($envBaseUrl)) {
+            return $envBaseUrl;
+        }
+
         return BASE_URL;
     }
 
