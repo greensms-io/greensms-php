@@ -72,7 +72,7 @@ class ModuleLoader
           'method' => $options['definition']['method']
         ];
 
-        $module = new Module($restClient, $moduleSchema, $requestArgs);
+        $module = new Module($restClient, $moduleSchema, $requestArgs, $options['uri'], $options['sharedOptions']['preSendHandler']);
         $functionInstance = array($module, 'apiFunction');
         return $functionInstance;
     }
@@ -102,7 +102,10 @@ class ModuleLoader
                 'url' => $apiUrl,
                 'definition' => $functionDefinition,
                 'sharedOptions' => $sharedOptions,
-                'moduleSchema' => $moduleSchema
+                'moduleSchema' => $moduleSchema,
+                'uri' => implode('/', array_map(function($v) {
+                    return rtrim($v, '/');
+                }, $urlParts)),
             ];
 
             $this->moduleMap->{$moduleName}->{$version}->{$functionName} = $this->getFunctionInstance($functionOptions);
@@ -143,6 +146,9 @@ class ModuleLoader
                     'definition' => $functionDefinition,
                     'sharedOptions' => $sharedOptions,
                     'moduleSchema' => $this->getSchema($moduleInfo['schema'] ?? [], $version, $prop, $functionName),
+                    'uri' => implode('/', array_map(function($v) {
+                        return rtrim($v, '/');
+                    }, $urlParts)),
                 ];
 
 

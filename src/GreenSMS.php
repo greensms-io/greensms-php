@@ -2,6 +2,7 @@
 
 namespace GreenSMS;
 
+use BadFunctionCallException;
 use Exception;
 use GreenSMS\Api\MethodInvoker;
 use GreenSMS\Api\ModuleLoader;
@@ -76,7 +77,8 @@ class GreenSMS extends MethodInvoker
           'restClient' => $this->getHttpClient([
             'useCamelCase' => $this->camelCaseResponse
           ]),
-          'version' => Version::getVersion($this->version)
+          'version' => Version::getVersion($this->version),
+          'preSendHandler' => $this->getPreSendHandler($options),
         ];
 
         $this->addModules($sharedOptions);
@@ -110,5 +112,18 @@ class GreenSMS extends MethodInvoker
 
         $restClient = new RestClient($httpParams);
         return $restClient;
+    }
+
+    private function getPreSendHandler($options): ?callable
+    {
+        if (array_key_exists('preSendHandler', $options)) {
+            if (is_callable($options['preSendHandler'])) {
+                return $options['preSendHandler'];
+            } else {
+                throw new BadFunctionCallException('Key `preSendHandler` must be callable');
+            }
+        }
+
+        return null;
     }
 }
