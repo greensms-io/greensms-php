@@ -22,6 +22,7 @@ class GreenSMS extends MethodInvoker
     protected $version;
     protected $useTokenForRequests = true;
     protected $camelCaseResponse = false;
+    protected $baseUrl = null;
 
     public function __construct($options = [])
     {
@@ -53,6 +54,10 @@ class GreenSMS extends MethodInvoker
         if (array_key_exists('version', $options)) {
             $this->version = $options['version'];
         }
+        
+        if (array_key_exists('baseUrl', $options)) {
+            $this->baseUrl = $options['baseUrl'];
+        }        
 
         if (!$this->token) {
             $this->token = getenv('GREENSMS_TOKEN');
@@ -73,7 +78,7 @@ class GreenSMS extends MethodInvoker
 
         $sharedOptions = [
           'useTokenForRequests' => $this->useTokenForRequests,
-          'baseUrl' => Url::baseUrl(),
+          'baseUrl' => $this->baseUrl ?? Url::baseUrl(),
           'restClient' => $this->getHttpClient([
             'useCamelCase' => $this->camelCaseResponse
           ]),
