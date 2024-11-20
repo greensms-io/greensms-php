@@ -89,6 +89,8 @@ final class AccountTest extends TestCase
         $this->utility->getInstance()->account->limits->get();
         $response = $this->utility->getInstance()->account->limits->set(['type' => 'IP', 'module' => 'ALL', 'value' => '1.1.1.1,8.8.8.8', 'comment' => 'test']);
         $this->assertEquals((object)['success' => 1], $response);
+        $response = $this->utility->getInstance()->account->limits->set(['type' => 'REQ_PER_DAY', 'module' => 'ALL', 'value' => '6000', 'comment' => 'test']);
+        $this->assertEquals((object)['success' => 1], $response);
     }
 
     public function testWebhook()

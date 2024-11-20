@@ -63,7 +63,7 @@ class Schema
                   ],
                   'limits' => [
                       'set' => [
-                          'type' =>  ['required',['subset', ['IP']]],
+                          'type' =>  ['required',['subset', ['IP', 'MCC', 'REQ_PER_DAY', 'REQ_PER_IP', 'REQ_PER_NUM']]],
                           'value' => ['required',['ipsCommaSeparator']],
                           'module' => self::getModuleSchema(),
                           'comment' => [['lengthMax', 50]],
