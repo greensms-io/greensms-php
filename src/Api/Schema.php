@@ -69,7 +69,7 @@ class Schema
                           'comment' => [['lengthMax', 50]],
                       ],
                       'delete' => [
-                          'type' =>  ['required',['subset', ['IP']]],
+                          'type' =>  ['required',['subset', ['IP', 'MCC', 'REQ_PER_DAY', 'REQ_PER_IP', 'REQ_PER_NUM']]],
                           'module' => self::getModuleSchema(),
                       ],
                   ],
