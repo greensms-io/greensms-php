@@ -173,21 +173,6 @@ class Modules
                 ]
             ]
           ],
-          'pay' => [
-              'schema' => $schema['pay'],
-              'versions' => [
-                  'v1' => [
-                      'send' => [
-                          'args' => ['params'],
-                          'method' => 'POST',
-                      ],
-                      'status' => [
-                          'args' => ['params'],
-                          'method' => 'GET',
-                      ],
-                  ]
-              ]
-          ],
           'hlr' => [
               'schema' => $schema['hlr'],
               'versions' => [

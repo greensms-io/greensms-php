@@ -18,7 +18,7 @@ class Schema
 
     private static function getModuleSchema()
     {
-        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "HLR", "PAY"]]];
+        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "HLR"]]];
     }
 
     private static function getCommonSchema()
@@ -133,20 +133,6 @@ class Schema
               ]
             ]
           ]),
-          'pay' => [
-            'v1' => [
-              'send' => [
-                'to' => self::getToSchema(),
-                'amount' => [ 'required','numeric', ['min', 1]],
-                'tag' => [['lengthMax', 36]],
-                'card' => [['lengthMin', 11], ['lengthMax', 14]]
-              ],
-              'status' => [
-                'id' => ['required'],
-                'extended' => [['subset', ['true', 'false']]]
-              ]
-            ]
-          ],
           'sms' => array_merge_recursive($commonSchema, [
             'v1' => [
               'send' => [
