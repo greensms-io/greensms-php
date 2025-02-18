@@ -18,7 +18,17 @@ class Schema
 
     private static function getModuleSchema()
     {
-        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "HLR"]]];
+        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "TELEGRAM", "HLR"]]];
+    }
+
+    private static function getModuleSchemaWithAccount()
+    {
+        return [['subset', ["ALL", "SMS", "CALL", "VOICE", "VK", "WHATSAPP", "VIBER", "TELEGRAM", "HLR", "ACCOUNT"]]];
+    }
+
+    private static function getTypeSchema()
+    {
+        return ['required', ['subset', ['IP', 'MCC', 'REQ_PER_DAY', 'REQ_PER_IP', 'REQ_PER_NUM']]];
     }
 
     private static function getCommonSchema()
@@ -63,14 +73,14 @@ class Schema
                   ],
                   'limits' => [
                       'set' => [
-                          'type' =>  ['required',['subset', ['IP', 'MCC', 'REQ_PER_DAY', 'REQ_PER_IP', 'REQ_PER_NUM']]],
+                          'type' =>  self::getTypeSchema(),
                           'value' => ['required',['ipsCommaSeparator']],
-                          'module' => self::getModuleSchema(),
+                          'module' => self::getModuleSchemaWithAccount(),
                           'comment' => [['lengthMax', 50]],
                       ],
                       'delete' => [
-                          'type' =>  ['required',['subset', ['IP', 'MCC', 'REQ_PER_DAY', 'REQ_PER_IP', 'REQ_PER_NUM']]],
-                          'module' => self::getModuleSchema(),
+                          'type' =>  self::getTypeSchema(),
+                          'module' => self::getModuleSchemaWithAccount(),
                       ],
                   ],
                   'webhook' => [
