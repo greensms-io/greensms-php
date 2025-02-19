@@ -218,6 +218,21 @@ class Modules
                   ]
               ]
           ],
+            'telegram' => [
+                'schema' => $schema['telegram'],
+                'versions' => [
+                    'v1' => [
+                        'send' => [
+                            'args' => ['params'],
+                            'method' => 'POST',
+                        ],
+                        'status' => [
+                            'args' => ['params'],
+                            'method' => 'GET',
+                        ],
+                    ]
+                ]
+            ],
         ];
     }
 }
