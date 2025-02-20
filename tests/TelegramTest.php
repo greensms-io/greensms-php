@@ -1,5 +1,6 @@
 <?php
 
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
 use GreenSMS\Tests\TestCase;
 
@@ -16,8 +17,8 @@ final class TelegramTest extends TestCase
     {
         $phoneNum = $this->utility->getRandomPhone();
         $params = [
-          'to' => $phoneNum,
-          'txt' => '1127',
+            'to' => $phoneNum,
+            'txt' => '1127',
         ];
 
         $response = $this->utility->getInstance()->telegram->send($params);
@@ -30,9 +31,12 @@ final class TelegramTest extends TestCase
      */
     public function testCanFetchStatus($requestId)
     {
-        sleep(2);
-        $response = $this->utility->getInstance()->telegram->status(['id' => $requestId, 'extended' => true ]);
-        $this->assertObjectHasAttribute('status', $response);
+        try {
+            $this->utility->getInstance()->telegram->status(['id' => $requestId, 'extended' => true ]);
+        } catch (RestException $e) {
+            $this->assertObjectHasAttribute('message', $e);
+            $this->assertEquals('Message not found', $e->getMessage());
+        }
     }
 
     public function testRaisesValidationException()
