@@ -139,6 +139,11 @@ class ModuleLoader
                 }
 
                 array_push($urlParts, $prop);
+
+                if (isset($functionDefinition['segments'])) {
+                    array_push($urlParts, ...$functionDefinition['segments']);
+                }
+
                 $apiUrl = Url::buildUrl($sharedOptions['baseUrl'], $urlParts);
 
                 $functionOptions = [

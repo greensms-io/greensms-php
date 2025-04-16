@@ -41,6 +41,18 @@ class Modules
                               'method' => 'DELETE',
                           ],
                       ],
+                      'password' => [
+                          'resetCode' => [
+                              'args' => null,
+                              'method' => 'POST',
+                              'segments' => ['reset-code']
+                          ],
+                          'reset' => [
+                              'args' => ['params'],
+                              'method' => 'POST',
+                              'segments' => ['reset']
+                          ],
+                      ],
                       'limits' => [
                           'get' => [
                               'args' => null,

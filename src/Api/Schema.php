@@ -71,6 +71,11 @@ class Schema
                           'to' => $toSchema,
                       ],
                   ],
+                  'password' => [
+                      'reset' => [
+                          'code' => ['required'],
+                      ],
+                  ],
                   'limits' => [
                       'set' => [
                           'type' =>  self::getTypeSchema(),
