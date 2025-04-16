@@ -110,4 +110,32 @@ final class AccountTest extends TestCase
         $response = $this->utility->getInstance()->account->whitelist->add(['to' => '70000000000', 'module' => 'ALL', 'comment' => 'test']);
         $this->assertEquals((object)['success' => 1], $response);
     }
+
+    public function testPasswordResetCode()
+    {
+        try {
+            $response = $this->utility->getInstance()->account->password->resetCode();
+            $this->assertObjectHasAttribute('success', $response);
+            $this->assertTrue($response->success);
+        } catch (RestException $t) {
+            $this->assertEquals(3, $t->getCode());
+        }
+    }
+
+    public function testPasswordResetValidation()
+    {
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Validation Error');
+        
+        $this->utility->getInstance()->account->password->reset();
+    }
+
+    public function testPasswordReset()
+    {
+        $this->expectException(RestException::class);
+        $this->expectExceptionMessage('Invalid or expired code');
+        $this->expectExceptionCode(2);
+        
+        $this->utility->getInstance()->account->password->reset(['code' => '123456']);
+    }
 }
