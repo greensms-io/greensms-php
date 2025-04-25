@@ -1,7 +1,7 @@
 <?php
 
 
-
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
@@ -43,11 +43,36 @@ final class HlrTest extends TestCase
     public function testRaisesValidationException()
     {
         try {
-            $response = $this->utility->getInstance()->hlr->send([]);
+            $this->utility->getInstance()->hlr->send([]);
             $this->fail("Shouldn't send Hlr without parameters");
         } catch (Exception $e) {
             $this->assertObjectHasAttribute('message', $e);
             $this->assertEquals('Validation Error', $e->getMessage());
         }
+    }
+    
+    public function testHlrSend()
+    {
+        $to = $this->utility->getRandomPhone(79150000000, 79150999999);
+        $response = $this->utility->getInstance()->hlr->send([
+            'to' => $to,
+        ]);
+        $this->assertObjectHasAttribute('request_id', $response);
+
+        return [$to, $response->request_id];
+    }
+
+    /**
+     * @depends testHlrSend
+     */
+    public function testHlrStatus($params)
+    {
+        $response = $this->utility->getInstance()->hlr->status([
+            'to' => $params[0],
+            'id' => $params[1],
+        ]);
+
+        $this->assertObjectHasAttribute('status', $response);
+
     }
 }
