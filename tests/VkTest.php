@@ -1,7 +1,7 @@
 <?php
 
 
-
+use GreenSMS\Http\RestException;
 use GreenSMS\Tests\Utility;
 use GreenSMS\GreenSMS;
 use GreenSMS\Tests\TestCase;
@@ -19,9 +19,10 @@ final class VkTest extends TestCase
     {
         $phoneNum = $this->utility->getRandomPhone();
         $params = [
-          'to' => $phoneNum,
-          'txt' => '1127',
-          'from' => 'GreenSMS'
+            'to' => $phoneNum,
+            'txt' => '1127',
+            'from' => 'GreenSMS',
+            'cascade' => 'voice,viber,sms',
         ];
 
         $response = $this->utility->getInstance()->vk->send($params);
@@ -48,5 +49,17 @@ final class VkTest extends TestCase
             $this->assertObjectHasAttribute('message', $e);
             $this->assertEquals('Validation Error', $e->getMessage());
         }
+    }
+    
+    public function testCommaSeparatedInStrictValidationFailure()
+    {
+        $this->expectException(RestException::class);
+
+        $this->utility->getInstance()->vk->send([
+            'to' => $this->utility->getRandomPhone(),
+            'txt' => 'Test Message',
+            'from' => 'GreenSMS',
+            'cascade' => 'voice,viber,invalid',
+        ]);
     }
 }

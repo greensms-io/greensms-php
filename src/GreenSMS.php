@@ -10,6 +10,8 @@ use GreenSMS\Http\RestClient;
 use GreenSMS\IdeHelper\Account;
 use GreenSMS\Utils\Url;
 use GreenSMS\Utils\Version;
+use Valitron\Validator;
+use Valitron\Validator as ValitronValidator;
 
 /**
  * @property Account $account
@@ -96,6 +98,35 @@ class GreenSMS extends MethodInvoker
         foreach ($modules as $moduleName => $moduleTree) {
             $this->{$moduleName} = $moduleTree;
         }
+
+        ValitronValidator::addRule('ipsCommaSeparator', function($field, $value, array $params, array $fields) {
+            if ($fields['type'] == 'IP') {
+                foreach (explode(',', $value) as $val) {
+                    if (!filter_var($val, FILTER_VALIDATE_IP)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }, 'IP incorrect');
+
+        Validator::addRule('commaSeparatedInStrict', function ($field, $value, array $params) {
+            if (!is_string($value)) {
+                return false;
+            }
+
+            $allowedValues = $params[0] ?? [];
+            $items = explode(',', $value);
+
+            foreach ($items as $item) {
+                if (!in_array($item, $allowedValues, true)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }, 'must contain values from the list with comma: %s');
     }
 
     public function getHttpClient($args)

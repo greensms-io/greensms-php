@@ -111,6 +111,17 @@ final class AccountTest extends TestCase
         $this->assertEquals((object)['success' => 1], $response);
     }
 
+    public function testWhitelistUseRules()
+    {
+        $this->expectException(RestException::class);
+
+        $this->utility->getInstance()->account->whitelist->add([
+            'to' => '70000000000', 
+            'module' => 'ALL', 
+            'comment' => str_repeat('s', 51),
+        ]);
+    }
+
     public function testPasswordResetCode()
     {
         try {

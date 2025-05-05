@@ -95,7 +95,7 @@ class Schema
                       ],
                   ],
                   'whitelist' => [
-                      'set' => [
+                      'add' => [
                           'to' => $toSchema,
                           'module' => self::getModuleSchema(),
                           'comment' => [['lengthMax', 50]],
@@ -120,7 +120,17 @@ class Schema
               ]
             ]
           ]) ,
-          'hlr' => $commonSchema,
+          'hlr' => [
+              'v1' => [
+                  'send' => [
+                      'to' => self::getToSchema(),
+                  ],
+                  'status' => [
+                      'to' => self::getToSchema(),
+                      'id' => self::getIdSchema(),
+                  ],
+              ],
+          ],
           'general' => [],
           'whois' => [
             'v1' => [
@@ -144,9 +154,9 @@ class Schema
                 'txt' => ['required', ['lengthMin', 1], ['lengthMax', 2048]],
                 'from' => ['required',['lengthMax', 11], ['lengthMin', 1]],
                 'tag' => [['lengthMax', 36]],
-                'cascade' => [['subset', ['viber', 'sms', 'voice']]]
-              ]
-            ]
+                'cascade' => [['commaSeparatedInStrict', ['viber', 'sms', 'voice']]],
+              ],
+            ],
           ]),
           'sms' => array_merge_recursive($commonSchema, [
             'v1' => [
