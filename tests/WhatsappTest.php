@@ -39,6 +39,13 @@ final class WhatsappTest extends TestCase
         $this->assertObjectHasAttribute('status', $response);
     }
     */
+    public function testCanGetChannelList()
+    {
+        $response = $this->utility->getInstance()->whatsapp->channel();
+        $this->assertObjectHasAttribute('channels', $response);
+        $this->assertIsArray($response->channels);
+    }
+
     public function testRaisesValidationException()
     {
         try {

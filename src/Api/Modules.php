@@ -171,7 +171,7 @@ class Modules
             ]
           ],
           'whatsapp' => [
-            'schema' => $schema['vk'],
+            'schema' => $schema['whatsapp'],
             'versions' => [
                 'v1' => [
                     'send' => [
@@ -180,6 +180,10 @@ class Modules
                     ],
                     'status' => [
                         'args' => ['params'],
+                        'method' => 'GET',
+                    ],
+                    'channel' => [
+                        'args' => null,
                         'method' => 'GET',
                     ],
                 ]
