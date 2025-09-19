@@ -185,6 +185,7 @@ class Schema
                 'file' => [['lengthMax', 256]],
                 'tag' => [['lengthMax', 36]],
               ],
+              'channel' => [],
             ]
           ]),
             'telegram' => array_merge_recursive($commonSchema, [
